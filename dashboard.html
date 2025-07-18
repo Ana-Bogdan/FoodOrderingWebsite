@@ -65,9 +65,11 @@
     function getProducts() {
       return JSON.parse(localStorage.getItem('products') || '[]');
     }
+
     function saveProducts(products) {
       localStorage.setItem('products', JSON.stringify(products));
     }
+
     function renderProducts() {
       const products = getProducts();
       const tbody = document.querySelector('#products-table tbody');
@@ -85,6 +87,7 @@
         tbody.appendChild(tr);
       });
     }
+
     document.getElementById('add-product-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const name = document.getElementById('product-name').value.trim();
@@ -92,13 +95,16 @@
       const vegetarian = document.getElementById('product-vegetarian').value;
       const price = document.getElementById('product-price').value.trim();
       const image = document.getElementById('product-image').value.trim();
+
       if (!name || !category || !vegetarian || !price || !image) return;
+
       const products = getProducts();
       products.push({ name, category, vegetarian, price, image });
       saveProducts(products);
       renderProducts();
       this.reset();
     });
+    
     document.querySelector('#products-table tbody').addEventListener('click', function(e) {
       if (e.target.classList.contains('remove-btn')) {
         const idx = parseInt(e.target.getAttribute('data-idx'));
@@ -108,6 +114,7 @@
         renderProducts();
       }
     });
+    
     renderProducts();
   </script>
 

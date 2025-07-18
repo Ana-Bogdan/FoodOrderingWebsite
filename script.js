@@ -163,14 +163,16 @@ function filterMenu() {
 
 function renderMenuFromLocalStorage() {
   const grid = document.querySelector('.menu-grid');
+
   if (!grid) return;
+  
   grid.innerHTML = '';
   const products = JSON.parse(localStorage.getItem('products') || '[]');
   if (!products.length) {
     grid.innerHTML = '<div style="text-align:center;width:100%;color:#888;font-size:1.2em;padding:2em 0;">No menu items available. Add products in the Dashboard.</div>';
     return;
   }
-  
+
   products.forEach(prod => {
     const div = document.createElement('div');
     div.className = 'menu-item';
