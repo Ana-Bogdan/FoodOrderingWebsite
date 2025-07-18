@@ -13,6 +13,7 @@ priceMin.addEventListener('input', () => {
   updatePriceRangeDisplay();
   filterMenu();
 });
+
 priceMax.addEventListener('input', () => {
   if (Number(priceMax.value) < Number(priceMin.value)) {
     priceMax.value = priceMin.value;
@@ -20,6 +21,7 @@ priceMax.addEventListener('input', () => {
   updatePriceRangeDisplay();
   filterMenu();
 });
+
 updatePriceRangeDisplay();
 
 const chevronLabels = document.querySelectorAll('.chevron-label');
@@ -33,6 +35,7 @@ chevronLabels.forEach(label => {
         if (dc) dc.style.display = 'none';
       }
     });
+
     const dropdown = label.querySelector('.dropdown-content');
     if (dropdown) {
       const isOpen = dropdown.style.display === 'block';
@@ -42,6 +45,7 @@ chevronLabels.forEach(label => {
     }
   });
 });
+
 document.addEventListener('click', () => {
   chevronLabels.forEach(l => {
     l.classList.remove('active');
@@ -49,6 +53,7 @@ document.addEventListener('click', () => {
     if (dc) dc.style.display = 'none';
   });
 });
+
 chevronLabels.forEach(label => {
   const dropdown = label.querySelector('.dropdown-content');
   if (!dropdown) return;
@@ -66,6 +71,7 @@ chevronLabels.forEach(label => {
     });
   });
 });
+
 function updateSliderHighlight() {
   const min = Math.min(Number(priceMin.value), Number(priceMax.value));
   const max = Math.max(Number(priceMin.value), Number(priceMax.value));
@@ -80,6 +86,7 @@ function updateSliderHighlight() {
   document.getElementById('price-min-label').textContent = `$${priceMin.value}`;
   document.getElementById('price-max-label').textContent = `$${priceMax.value}`;
 }
+
 priceMin.addEventListener('input', () => {
   if (Number(priceMin.value) > Number(priceMax.value)) {
     priceMin.value = priceMax.value;
@@ -88,6 +95,7 @@ priceMin.addEventListener('input', () => {
   updateSliderHighlight();
   filterMenu();
 });
+
 priceMax.addEventListener('input', () => {
   if (Number(priceMax.value) < Number(priceMin.value)) {
     priceMax.value = priceMin.value;
@@ -96,6 +104,7 @@ priceMax.addEventListener('input', () => {
   updateSliderHighlight();
   filterMenu();
 });
+
 updatePriceRangeDisplay();
 updateSliderHighlight();
 
@@ -121,6 +130,7 @@ function filterMenu() {
   const min = Math.min(Number(priceMin.value), Number(priceMax.value));
   const max = Math.max(Number(priceMin.value), Number(priceMax.value));
   const items = document.querySelectorAll('.menu-item');
+  
   items.forEach(item => {
     const price = Number(item.getAttribute('data-price'));
     const category = item.getAttribute('data-category');
@@ -131,6 +141,7 @@ function filterMenu() {
     if (price < min || price > max) show = false;
     item.style.display = show ? '' : 'none';
   });
+
   let sortedItems = Array.from(items).filter(item => item.style.display !== 'none');
   if (selectedSort === 'Price: Low to High') {
     sortedItems.sort((a, b) => {
@@ -145,6 +156,7 @@ function filterMenu() {
       return pb - pa;
     });
   }
+
   const grid = document.querySelector('.menu-grid');
   sortedItems.forEach(item => grid.appendChild(item));
 }
@@ -158,6 +170,7 @@ function renderMenuFromLocalStorage() {
     grid.innerHTML = '<div style="text-align:center;width:100%;color:#888;font-size:1.2em;padding:2em 0;">No menu items available. Add products in the Dashboard.</div>';
     return;
   }
+  
   products.forEach(prod => {
     const div = document.createElement('div');
     div.className = 'menu-item';

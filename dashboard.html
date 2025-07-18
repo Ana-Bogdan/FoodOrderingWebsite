@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Manage Products</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+
   <style>
     .dashboard-container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 2rem; }
     .dashboard-title { font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center; }
@@ -17,7 +20,9 @@
     .remove-btn { background: #e53935; color: #fff; border: none; border-radius: 6px; padding: 0.4em 1em; cursor: pointer; font-weight: bold; }
     .return-btn { margin-top: 2rem; background: #333; color: #fff; border: none; border-radius: 8px; padding: 0.7em 1.4em; font-size: 1.1em; font-weight: bold; cursor: pointer; display: block; margin-left: auto; margin-right: auto; }
   </style>
+
 </head>
+
 <body>
   <div class="dashboard-container">
     <div class="dashboard-title">Product Dashboard</div>
@@ -55,7 +60,7 @@
     </table>
     <button class="return-btn" onclick="window.location.href='index.html'">Return to Main Page</button>
   </div>
-  <script src="script.js"></script>
+
   <script>
     function getProducts() {
       return JSON.parse(localStorage.getItem('products') || '[]');
@@ -105,5 +110,6 @@
     });
     renderProducts();
   </script>
+
 </body>
-</html> 
+</html>
