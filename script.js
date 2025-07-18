@@ -6,20 +6,23 @@ function updatePriceRangeDisplay() {
   document.getElementById('price-max-label').textContent = `$${priceMax.value}`;
 }
 
-priceMin.addEventListener('input', () => {
-  if (Number(priceMin.value) > Number(priceMax.value)) {
-    priceMin.value = priceMax.value;
+function handlePriceInput(changed, other, isMin) {
+  if (isMin && Number(changed.value) > Number(other.value)) {
+    changed.value = other.value;
+  } else if (!isMin && Number(changed.value) < Number(other.value)) {
+    changed.value = other.value;
   }
   updatePriceRangeDisplay();
   filterMenu();
-});
-priceMax.addEventListener('input', () => {
-  if (Number(priceMax.value) < Number(priceMin.value)) {
-    priceMax.value = priceMin.value;
-  }
-  updatePriceRangeDisplay();
-  filterMenu();
-});
+}
+
+function setupPriceListeners() {
+  priceMin.addEventListener('input', () => handlePriceInput(priceMin, priceMax, true));
+  priceMax.addEventListener('input', () => handlePriceInput(priceMax, priceMin, false));
+}
+
+setupPriceListeners();
+
 updatePriceRangeDisplay();
 
 const chevronLabels = document.querySelectorAll('.chevron-label');
@@ -42,6 +45,7 @@ chevronLabels.forEach(label => {
     }
   });
 });
+
 document.addEventListener('click', () => {
   chevronLabels.forEach(l => {
     l.classList.remove('active');
@@ -49,6 +53,7 @@ document.addEventListener('click', () => {
     if (dc) dc.style.display = 'none';
   });
 });
+
 chevronLabels.forEach(label => {
   const dropdown = label.querySelector('.dropdown-content');
   if (!dropdown) return;
@@ -66,6 +71,7 @@ chevronLabels.forEach(label => {
     });
   });
 });
+
 function updateSliderHighlight() {
   const min = Math.min(Number(priceMin.value), Number(priceMax.value));
   const max = Math.max(Number(priceMin.value), Number(priceMax.value));
@@ -80,6 +86,7 @@ function updateSliderHighlight() {
   document.getElementById('price-min-label').textContent = `$${priceMin.value}`;
   document.getElementById('price-max-label').textContent = `$${priceMax.value}`;
 }
+
 priceMin.addEventListener('input', () => {
   if (Number(priceMin.value) > Number(priceMax.value)) {
     priceMin.value = priceMax.value;
@@ -88,6 +95,7 @@ priceMin.addEventListener('input', () => {
   updateSliderHighlight();
   filterMenu();
 });
+
 priceMax.addEventListener('input', () => {
   if (Number(priceMax.value) < Number(priceMin.value)) {
     priceMax.value = priceMin.value;
@@ -96,6 +104,7 @@ priceMax.addEventListener('input', () => {
   updateSliderHighlight();
   filterMenu();
 });
+
 updatePriceRangeDisplay();
 updateSliderHighlight();
 
@@ -153,7 +162,7 @@ function renderMenuFromLocalStorage() {
   const grid = document.querySelector('.menu-grid');
   if (!grid) return;
   grid.innerHTML = '';
-  const products = JSON.parse(localStorage.getItem('products') || '[]');
+  const products = getProducts();
   if (!products.length) {
     grid.innerHTML = '<div style="text-align:center;width:100%;color:#888;font-size:1.2em;padding:2em 0;">No menu items available. Add products in the Dashboard.</div>';
     return;
@@ -174,6 +183,7 @@ function renderMenuFromLocalStorage() {
   });
 }
 
+renderMenuFromLocalStorage();
 filterMenu();
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -184,4 +194,65 @@ document.addEventListener('DOMContentLoaded', function() {
       window.open('dashboard.html', '_blank');
     });
   }
+
+  function getProducts() {
+    return JSON.parse(localStorage.getItem('products') || '[]');
+  }
+
+  function saveProducts(products) {
+    localStorage.setItem('products', JSON.stringify(products));
+  }
+
+  function renderProducts() {
+    const products = getProducts();
+    const tbody = document.querySelector('#products-table tbody');
+
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    products.forEach((prod, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${prod.name}</td>
+        <td>${prod.category}</td>
+        <td>${prod.vegetarian === 'yes' ? 'Yes' : 'No'}</td>
+        <td>$${parseFloat(prod.price).toFixed(2)}</td>
+        <td><img src="${prod.image}" alt="${prod.name}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;"></td>
+        <td><button class="remove-btn" data-idx="${idx}">Remove</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  const addProductForm = document.getElementById('add-product-form');
+  if (addProductForm) {
+    addProductForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('product-name').value.trim();
+      const category = document.getElementById('product-category').value;
+      const vegetarian = document.getElementById('product-vegetarian').value;
+      const price = document.getElementById('product-price').value.trim();
+      const image = document.getElementById('product-image').value.trim();
+
+      if (!name || !category || !vegetarian || !price || !image) return;
+
+      const products = getProducts();
+      products.push({ name, category, vegetarian, price, image });
+      saveProducts(products);
+      renderProducts();
+      this.reset();
+    });
+  }
+  const productsTableBody = document.querySelector('#products-table tbody');
+  if (productsTableBody) {
+    productsTableBody.addEventListener('click', function(e) {
+      if (e.target.classList.contains('remove-btn')) {
+        const idx = parseInt(e.target.getAttribute('data-idx'));
+        const products = getProducts();
+        products.splice(idx, 1);
+        saveProducts(products);
+        renderProducts();
+      }
+    });
+  }
+  renderProducts();
 });

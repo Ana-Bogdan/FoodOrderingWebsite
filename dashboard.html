@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Manage Products</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .dashboard-container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 2rem; }
-    .dashboard-title { font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center; }
-    .product-form { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
-    .product-form input { flex: 1 1 180px; padding: 0.7em; border-radius: 6px; border: 1px solid #ccc; font-size: 1em; }
-    .product-form button { background: var(--accent-color); color: #fff; border: none; padding: 0.7em 1.4em; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; }
-    .product-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-    .product-table th, .product-table td { padding: 0.7em; border-bottom: 1px solid #eee; text-align: left; }
-    .product-table th { background: #fafafa; }
-    .remove-btn { background: #e53935; color: #fff; border: none; border-radius: 6px; padding: 0.4em 1em; cursor: pointer; font-weight: bold; }
-    .return-btn { margin-top: 2rem; background: #333; color: #fff; border: none; border-radius: 8px; padding: 0.7em 1.4em; font-size: 1.1em; font-weight: bold; cursor: pointer; display: block; margin-left: auto; margin-right: auto; }
-  </style>
+  <script src="script.js"></script>
 </head>
+
 <body>
   <div class="dashboard-container">
     <div class="dashboard-title">Product Dashboard</div>
@@ -55,55 +46,6 @@
     </table>
     <button class="return-btn" onclick="window.location.href='index.html'">Return to Main Page</button>
   </div>
-  <script src="script.js"></script>
-  <script>
-    function getProducts() {
-      return JSON.parse(localStorage.getItem('products') || '[]');
-    }
-    function saveProducts(products) {
-      localStorage.setItem('products', JSON.stringify(products));
-    }
-    function renderProducts() {
-      const products = getProducts();
-      const tbody = document.querySelector('#products-table tbody');
-      tbody.innerHTML = '';
-      products.forEach((prod, idx) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${prod.name}</td>
-          <td>${prod.category}</td>
-          <td>${prod.vegetarian === 'yes' ? 'Yes' : 'No'}</td>
-          <td>$${parseFloat(prod.price).toFixed(2)}</td>
-          <td><img src="${prod.image}" alt="${prod.name}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;"></td>
-          <td><button class="remove-btn" data-idx="${idx}">Remove</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-    document.getElementById('add-product-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const name = document.getElementById('product-name').value.trim();
-      const category = document.getElementById('product-category').value;
-      const vegetarian = document.getElementById('product-vegetarian').value;
-      const price = document.getElementById('product-price').value.trim();
-      const image = document.getElementById('product-image').value.trim();
-      if (!name || !category || !vegetarian || !price || !image) return;
-      const products = getProducts();
-      products.push({ name, category, vegetarian, price, image });
-      saveProducts(products);
-      renderProducts();
-      this.reset();
-    });
-    document.querySelector('#products-table tbody').addEventListener('click', function(e) {
-      if (e.target.classList.contains('remove-btn')) {
-        const idx = parseInt(e.target.getAttribute('data-idx'));
-        const products = getProducts();
-        products.splice(idx, 1);
-        saveProducts(products);
-        renderProducts();
-      }
-    });
-    renderProducts();
-  </script>
+  
 </body>
-</html> 
+</html>
