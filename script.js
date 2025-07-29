@@ -10,16 +10,20 @@ priceMin.addEventListener('input', () => {
   if (Number(priceMin.value) > Number(priceMax.value)) {
     priceMin.value = priceMax.value;
   }
+
   updatePriceRangeDisplay();
   filterMenu();
 });
+
 priceMax.addEventListener('input', () => {
   if (Number(priceMax.value) < Number(priceMin.value)) {
     priceMax.value = priceMin.value;
   }
+
   updatePriceRangeDisplay();
   filterMenu();
 });
+
 updatePriceRangeDisplay();
 
 const chevronLabels = document.querySelectorAll('.chevron-label');
@@ -52,6 +56,7 @@ document.addEventListener('click', () => {
 chevronLabels.forEach(label => {
   const dropdown = label.querySelector('.dropdown-content');
   if (!dropdown) return;
+
   dropdown.querySelectorAll('.option').forEach(option => {
     option.addEventListener('click', () => {
       dropdown.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -66,6 +71,7 @@ chevronLabels.forEach(label => {
     });
   });
 });
+
 function updateSliderHighlight() {
   const min = Math.min(Number(priceMin.value), Number(priceMax.value));
   const max = Math.max(Number(priceMin.value), Number(priceMax.value));
@@ -80,22 +86,27 @@ function updateSliderHighlight() {
   document.getElementById('price-min-label').textContent = `$${priceMin.value}`;
   document.getElementById('price-max-label').textContent = `$${priceMax.value}`;
 }
+
 priceMin.addEventListener('input', () => {
   if (Number(priceMin.value) > Number(priceMax.value)) {
     priceMin.value = priceMax.value;
   }
+
   updatePriceRangeDisplay();
   updateSliderHighlight();
   filterMenu();
 });
+
 priceMax.addEventListener('input', () => {
   if (Number(priceMax.value) < Number(priceMin.value)) {
     priceMax.value = priceMin.value;
   }
+
   updatePriceRangeDisplay();
   updateSliderHighlight();
   filterMenu();
 });
+
 updatePriceRangeDisplay();
 updateSliderHighlight();
 
@@ -108,7 +119,7 @@ document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
     option.addEventListener('click', () => {
       const btn = dropdown.querySelector('.filter-btn');
       const label = btn.getAttribute('data-label');
-      btn.textContent = `${label}: ${option.textContent} ▾`;
+      btn.textContent = `${label}: ${option.textContent} \u25be`;
       if (label === 'CATEGORY') selectedCategory = option.textContent;
       if (label === 'SORTING') selectedSort = option.textContent;
       if (label === 'VEGETARIAN') selectedVegetarian = option.textContent;
@@ -152,12 +163,14 @@ function filterMenu() {
 function renderMenuFromLocalStorage() {
   const grid = document.querySelector('.menu-grid');
   if (!grid) return;
+
   grid.innerHTML = '';
   const products = JSON.parse(localStorage.getItem('products') || '[]');
   if (!products.length) {
     grid.innerHTML = '<div style="text-align:center;width:100%;color:#888;font-size:1.2em;padding:2em 0;">No menu items available. Add products in the Dashboard.</div>';
     return;
   }
+
   products.forEach(prod => {
     const div = document.createElement('div');
     div.className = 'menu-item';
