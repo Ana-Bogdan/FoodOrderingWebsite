@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: MyString
+  vegetarian: false
+  price: 9.99
+  image: MyString
+
+two:
+  name: MyString
+  category: MyString
+  vegetarian: false
+  price: 9.99
+  image: MyString

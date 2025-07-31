@@ -1,0 +1,38 @@
+<div class="dashboard-container">
+  <div class="dashboard-title">Product Dashboard</div>
+  <%= form_with(model: Product.new, url: products_path, method: :post, local: true, html: { class: "product-form" }) do |f| %>
+    <%= f.text_field :name, placeholder: "Product Name", required: true %>
+    <%= f.select :category, ['Second courses', 'Entrees', 'Salads', 'Main courses'], prompt: "Select Category", required: true %>
+    <%= f.select :vegetarian, [['Yes', true], ['No', false]], prompt: "Vegetarian?", required: true %>
+    <%= f.number_field :price, placeholder: "Price", step: 0.01, min: 0, required: true %>
+    <%= f.text_field :image, placeholder: "Image URL", required: true %>
+    <%= f.submit "Add Product" %>
+  <% end %>
+
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Vegetarian</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.category %></td>
+          <td><%= product.vegetarian ? "Yes" : "No" %></td>
+          <td>$<%= number_with_precision(product.price, precision: 2) %></td>
+          <td><img src="<%= product.image %>" style="width:48px;height:48px;border-radius:8px;object-fit:cover;"></td>
+          <td><%= link_to "Remove", product_path(product), method: :delete, data: { confirm: "Are you sure?" }, class: "remove-btn" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Return to Main Page", root_path, class: "return-btn" %>
+</div>
