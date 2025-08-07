@@ -28,6 +28,25 @@ class CartController < ApplicationController
     redirect_to cart_path, notice: "#{product_name} removed from cart!"
   end
 
+  def increment_quantity
+    cart_item = @cart.cart_items.find(params[:id])
+    cart_item.update(quantity: cart_item.quantity + 1)
+
+    redirect_to cart_path, notice: "#{cart_item.product.name} quantity increased!"
+  end
+
+  def decrement_quantity
+    cart_item = @cart.cart_items.find(params[:id])
+
+    if cart_item.quantity > 1
+      cart_item.update(quantity: cart_item.quantity - 1)
+      redirect_to cart_path, notice: "#{cart_item.product.name} quantity decreased!"
+    else
+      cart_item.destroy
+      redirect_to cart_path, notice: "#{cart_item.product.name} removed from cart!"
+    end
+  end
+
   private
 
   def require_login

@@ -27,10 +27,17 @@
           <div class="cart-item-details">
             <h3><%= cart_item.product.name %></h3>
             <p class="cart-item-price">$<%= number_with_precision(cart_item.product.price, precision: 2) %></p>
-            <p class="cart-item-quantity">Quantity: <%= cart_item.quantity %></p>
+            <div class="quantity-controls">
+              <span class="quantity-label">Quantity:</span>
+              <div class="quantity-buttons">
+                <%= button_to "-", decrement_cart_item_path(cart_item), method: :patch, class: "quantity-btn quantity-decrease", form: { style: "display: inline;" } %>
+                <span class="quantity-display"><%= cart_item.quantity %></span>
+                <%= button_to "+", increment_cart_item_path(cart_item), method: :patch, class: "quantity-btn quantity-increase", form: { style: "display: inline;" } %>
+              </div>
+            </div>
           </div>
           <div class="cart-item-actions">
-            <%= button_to "Remove", remove_from_cart_path(cart_item), method: :delete, class: "remove-cart-btn", data: { confirm: "Remove this item from cart?" } %>
+            <%= button_to "Remove All", remove_from_cart_path(cart_item), method: :delete, class: "remove-cart-btn", data: { confirm: "Remove all #{cart_item.product.name} from cart?" } %>
           </div>
         </div>
       <% end %>

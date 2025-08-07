@@ -5,12 +5,14 @@ Rails.application.routes.draw do
   get "register", to: "auth#register"
   post "register", to: "auth#register"
   get "logout", to: "auth#logout"
-  
+
   # Cart routes
   get "cart", to: "cart#show"
   post "cart/add_item/:product_id", to: "cart#add_item", as: :add_to_cart
   delete "cart/remove_item/:id", to: "cart#remove_item", as: :remove_from_cart
-  
+  patch "cart/increment_quantity/:id", to: "cart#increment_quantity", as: :increment_cart_item
+  patch "cart/decrement_quantity/:id", to: "cart#decrement_quantity", as: :decrement_cart_item
+
   root "products#index"
   resources :products
   get "dashboard", to: "products#dashboard"
