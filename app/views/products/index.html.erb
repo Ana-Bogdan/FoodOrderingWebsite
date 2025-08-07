@@ -1,0 +1,70 @@
+<% content_for :title, "Eureka Caffe - Ordering Food" %>
+
+<% content_for :hero_content do %>
+  <h1>Ordering food</h1>
+  <div class="hero-divider">
+    <svg class="squiggle" width="600" height="28" viewBox="0 0 600 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 14 Q 8 0, 16 14 T 32 14 T 48 14 T 64 14 T 80 14 T 96 14 T 112 14 T 128 14 T 144 14 T 160 14 T 176 14 T 192 14 T 208 14 T 224 14 T 240 14 T 256 14 T 272 14 T 288 14 T 304 14 T 320 14 T 336 14 T 352 14 T 368 14 T 384 14 T 400 14 T 416 14 T 432 14 T 448 14 T 464 14 T 480 14 T 496 14 T 512 14 T 528 14 T 544 14 T 560 14 T 576 14 T 592 14 T 600 14" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+    <span class="cutlery-icon">
+      <img src="https://png.pngtree.com/png-clipart/20231115/ourmid/pngtree-fork-and-knife-png-image_10593218.png" alt="Cutlery" />
+    </span>
+    <svg class="squiggle" width="600" height="28" viewBox="0 0 600 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 14 Q 8 0, 16 14 T 32 14 T 48 14 T 64 14 T 80 14 T 96 14 T 112 14 T 128 14 T 144 14 T 160 14 T 176 14 T 192 14 T 208 14 T 224 14 T 240 14 T 256 14 T 272 14 T 288 14 T 304 14 T 320 14 T 336 14 T 352 14 T 368 14 T 384 14 T 400 14 T 416 14 T 432 14 T 448 14 T 464 14 T 480 14 T 496 14 T 512 14 T 528 14 T 544 14 T 560 14 T 576 14 T 592 14 T 600 14" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+  </div>
+  <p>Maecenas vel tellus at magna sagittis venenatis. Integer pretium auctor magna, egestas justo gravida vitae. In lacinia auctor auctor.</p>
+<% end %>
+
+<section class="filters-bar minimal">
+  <div class="filter-group">
+    <div class="filter-label chevron-label" data-label="CATEGORY" tabindex="0">
+      CATEGORY <span class="chevron orange">▼</span>
+      <div class="dropdown-content">
+        <div class="option">All</div>
+        <div class="option">Entrees</div>
+        <div class="option">Main courses</div>
+        <div class="option">Second courses</div>
+        <div class="option">Salads</div>
+      </div>
+    </div>
+    <div class="filter-label chevron-label" data-label="SORTING" tabindex="0">
+      SORTING <span class="chevron orange">▼</span>
+      <div class="dropdown-content">
+        <div class="option">Price: Low to High</div>
+        <div class="option">Price: High to Low</div>
+      </div>
+    </div>
+    <div class="filter-label chevron-label" data-label="VEGETARIAN" tabindex="0">
+      VEGETARIAN <span class="chevron orange">▼</span>
+      <div class="dropdown-content">
+        <div class="option">All</div>
+        <div class="option">Vegetarian only</div>
+      </div>
+    </div>
+  </div>
+  <div class="price-block minimal">
+    <span class="price-label">PRICE</span>
+    <span id="price-min-label">$5</span>
+    <div class="price-slider-container minimal">
+      <input type="range" id="price-min" min="5" max="100" value="5">
+      <input type="range" id="price-max" min="5" max="100" value="100">
+      <div class="slider-range-highlight"></div>
+    </div>
+    <span id="price-max-label">$100</span>
+  </div>
+</section>
+
+<section class="menu-grid">
+  <% @products.each do |product| %>
+    <div class="menu-item" data-category="<%= product.category %>" data-vegetarian="<%= product.vegetarian ? 'yes' : 'no' %>" data-price="<%= product.price %>">
+      <img src="<%= product.image %>" alt="<%= product.name %>">
+      <h3><%= product.name %></h3>
+      <p class="category"><%= product.category %></p>
+      <p class="price">$<%= number_with_precision(product.price, precision: 2) %></p>
+      <% if logged_in? %>
+        <%= button_to "Add to Cart", add_to_cart_path(product), method: :post, class: "add-to-cart-btn", form: { style: "display: inline;" } %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

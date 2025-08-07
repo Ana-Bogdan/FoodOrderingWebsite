@@ -1,0 +1,87 @@
+:root {
+  --white: #fff;
+  --white-alt: #fafafa;
+}
+
+.dashboard-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.product-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.product-form input {
+  flex: 1 1 180px;
+  padding: 0.7em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.product-form button {
+  background: var(--accent-color);
+  color: var(--white);
+  border: none;
+  padding: 0.7em 1.4em;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.product-table th, .product-table td {
+  padding: 0.7em;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.product-table th {
+  background: var(--white-alt);
+}
+
+.remove-btn {
+  background: #e53935;
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.return-btn {
+  margin-top: 2rem;
+  background: #333;
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.4em;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+} 

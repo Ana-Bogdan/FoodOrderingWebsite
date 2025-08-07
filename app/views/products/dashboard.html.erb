@@ -1,0 +1,56 @@
+<% content_for :title, "Eureka Caffe - Dashboard" %>
+
+<% content_for :hero_content do %>
+  <h1>Dashboard</h1>
+  <div class="hero-divider">
+    <svg class="squiggle" width="600" height="28" viewBox="0 0 600 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 14 Q 8 0, 16 14 T 32 14 T 48 14 T 64 14 T 80 14 T 96 14 T 112 14 T 128 14 T 144 14 T 160 14 T 176 14 T 192 14 T 208 14 T 224 14 T 240 14 T 256 14 T 272 14 T 288 14 T 304 14 T 320 14 T 336 14 T 352 14 T 368 14 T 384 14 T 400 14 T 416 14 T 432 14 T 448 14 T 464 14 T 480 14 T 496 14 T 512 14 T 528 14 T 544 14 T 560 14 T 576 14 T 592 14 T 600 14" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+    <span class="cutlery-icon">
+      <img src="https://png.pngtree.com/png-clipart/20231115/ourmid/pngtree-fork-and-knife-png-image_10593218.png" alt="Cutlery" />
+    </span>
+    <svg class="squiggle" width="600" height="28" viewBox="0 0 600 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 14 Q 8 0, 16 14 T 32 14 T 48 14 T 64 14 T 80 14 T 96 14 T 112 14 T 128 14 T 144 14 T 160 14 T 176 14 T 192 14 T 208 14 T 224 14 T 240 14 T 256 14 T 272 14 T 288 14 T 304 14 T 320 14 T 336 14 T 352 14 T 368 14 T 384 14 T 400 14 T 416 14 T 432 14 T 448 14 T 464 14 T 480 14 T 496 14 T 512 14 T 528 14 T 544 14 T 560 14 T 576 14 T 592 14 T 600 14" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+  </div>
+  <p>Manage your restaurant's menu items with ease. Add, edit, and remove products from your inventory.</p>
+<% end %>
+
+<div class="dashboard-container">
+  <div class="dashboard-title">New Product</div>
+  <%= form_with(model: Product.new, url: products_path, method: :post, local: true, html: { class: "product-form" }) do |f| %>
+    <%= f.text_field :name, placeholder: "Product Name", required: true %>
+    <%= f.select :category, ['Second courses', 'Entrees', 'Salads', 'Main courses'], prompt: "Select Category", required: true %>
+    <%= f.select :vegetarian, [['Yes', true], ['No', false]], prompt: "Vegetarian?", required: true %>
+    <%= f.number_field :price, placeholder: "Price", step: 0.01, min: 0, required: true %>
+    <%= f.text_field :image, placeholder: "Image URL", required: true %>
+    <%= f.submit "Add Product" %>
+  <% end %>
+
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Vegetarian</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.category %></td>
+          <td><%= product.vegetarian ? "Yes" : "No" %></td>
+          <td>$<%= number_with_precision(product.price, precision: 2) %></td>
+          <td><img src="<%= product.image %>" style="width:48px;height:48px;border-radius:8px;object-fit:cover;"></td>
+          <td><%= link_to "Remove", product_path(product), method: :delete, data: { confirm: "Are you sure?" }, class: "remove-btn" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Return to Main Page", root_path, class: "return-btn" %>
+</div>

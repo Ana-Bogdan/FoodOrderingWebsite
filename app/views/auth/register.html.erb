@@ -1,0 +1,69 @@
+<% content_for :title, "Eureka Caffe - Register" %>
+
+<% content_for :hero_content do %>
+  <h1>Register</h1>
+  <div class="hero-divider">
+    <svg class="squiggle" width="600" height="28" viewBox="0 0 600 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 14 Q 8 0, 16 14 T 32 14 T 48 14 T 64 14 T 80 14 T 96 14 T 112 14 T 128 14 T 144 14 T 160 14 T 176 14 T 192 14 T 208 14 T 224 14 T 240 14 T 256 14 T 272 14 T 288 14 T 304 14 T 320 14 T 336 14 T 352 14 T 368 14 T 384 14 T 400 14 T 416 14 T 432 14 T 448 14 T 464 14 T 480 14 T 496 14 T 512 14 T 528 14 T 544 14 T 560 14 T 576 14 T 592 14 T 600 14" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+    <span class="cutlery-icon">
+      <img src="https://png.pngtree.com/png-clipart/20231115/ourmid/pngtree-fork-and-knife-png-image_10593218.png" alt="Cutlery" />
+    </span>
+    <svg class="squiggle" width="600" height="28" viewBox="0 0 600 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 14 Q 8 0, 16 14 T 32 14 T 48 14 T 64 14 T 80 14 T 96 14 T 112 14 T 128 14 T 144 14 T 160 14 T 176 14 T 192 14 T 208 14 T 224 14 T 240 14 T 256 14 T 272 14 T 288 14 T 304 14 T 320 14 T 336 14 T 352 14 T 368 14 T 384 14 T 400 14 T 416 14 T 432 14 T 448 14 T 464 14 T 480 14 T 496 14 T 512 14 T 528 14 T 544 14 T 560 14 T 576 14 T 592 14 T 600 14" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+  </div>
+  <p>Create your account to get started with Eureka Caffe.</p>
+<% end %>
+
+<div class="auth-container">
+  <div class="auth-form">
+    <h2>Create Account</h2>
+    
+    <% if flash[:alert] %>
+      <div class="alert alert-error">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    
+    <%= form_with model: @user, url: register_path, method: :post, local: true do |f| %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-error">
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="form-group">
+        <%= f.label :name, "Full Name" %>
+        <%= f.text_field :name, required: true, placeholder: "Enter your full name" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, required: true, placeholder: "Enter your email" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.password_field :password, required: true, placeholder: "Enter your password (minimum 6 characters)" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.password_field :password_confirmation, required: true, placeholder: "Confirm your password" %>
+      </div>
+      
+      <div class="form-actions">
+        <%= f.submit "Register", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+    
+    <div class="auth-links">
+      <p>Already have an account? <%= link_to "Login here", login_path, class: "link" %></p>
+    </div>
+  </div>
+</div>
