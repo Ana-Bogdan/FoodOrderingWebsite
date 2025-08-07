@@ -51,7 +51,9 @@
           <li><a href="#">SERVICE</a></li>
           <li><a href="#">BLOG</a></li>
           <li><a href="#">CONTACTS</a></li>
-          <li><%= link_to "DASHBOARD", dashboard_path, target: "_blank" %></li>
+          <% if logged_in? && current_user.admin? %>
+            <li><%= link_to "DASHBOARD", dashboard_path %></li>
+          <% end %>
           <% if logged_in? && current_user.cart %>
             <li><%= link_to "CART (#{current_user.cart.item_count})", cart_path %></li>
           <% end %>

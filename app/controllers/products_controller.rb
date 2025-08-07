@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :require_admin, only: %i[ dashboard new create edit update destroy ]
 
   def index
     @products = Product.all
@@ -63,5 +64,11 @@ class ProductsController < ApplicationController
 
     def product_params
       params.require(:product).permit(:name, :category, :vegetarian, :price, :image)
+    end
+
+    def require_admin
+      unless logged_in? && current_user.admin?
+        redirect_to root_path, alert: "Access denied. Admin privileges required."
+      end
     end
 end

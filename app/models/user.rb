@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   has_one :cart, dependent: :destroy
 
+  enum :role, { user: 0, admin: 1 }
+
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :email, presence: true, uniqueness: true,
             format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
