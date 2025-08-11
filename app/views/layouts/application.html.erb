@@ -12,9 +12,11 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "styles", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "dashboard_styles", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "orders_styles", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "script", "data-turbo-track": "reload" %>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -53,6 +55,7 @@
           <li><a href="#">CONTACTS</a></li>
           <% if logged_in? && current_user.admin? %>
             <li><%= link_to "DASHBOARD", dashboard_path %></li>
+            <li><%= link_to "ORDERS", orders_path %></li>
           <% end %>
           <% if logged_in? && current_user.cart %>
             <li><%= link_to "CART (#{current_user.cart.item_count})", cart_path %></li>

@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   delete "cart/remove_item/:id", to: "cart#remove_item", as: :remove_from_cart
   patch "cart/increment_quantity/:id", to: "cart#increment_quantity", as: :increment_cart_item
   patch "cart/decrement_quantity/:id", to: "cart#decrement_quantity", as: :decrement_cart_item
+  post "cart/place_order", to: "cart#place_order", as: :place_order
+
+  # Orders routes (admin only)
+  resources :orders, only: [:index]
+  patch "orders/:id/toggle_status", to: "orders#toggle_status", as: :toggle_order_status
 
   root "products#index"
   resources :products
@@ -23,8 +28,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # get "manifest" => "rails/pwa#manifest", as: :rails_pwa_manifest
+  # get "service-worker" => "rails/pwa#service_worker", as: :rails_pwa_service_worker
 
   # Defines the root path route ("/")
   # root "posts#index"
