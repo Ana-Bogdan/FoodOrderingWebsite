@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :require_login
   before_action :require_admin
-  before_action :set_order, only: [:toggle_status]
+  before_action :set_order, only: [ :toggle_status ]
 
   def index
     @orders = Order.includes(:user, :order_items, :products).order(created_at: :desc)
@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
       @order.update(status: :completed)
       flash[:notice] = "Order marked as completed"
     end
-    
+
     redirect_to orders_path
   end
 
@@ -30,4 +30,4 @@ class OrdersController < ApplicationController
   def set_order
     @order = Order.find(params[:id])
   end
-end 
+end

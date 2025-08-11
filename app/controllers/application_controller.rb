@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   include ActionView::Helpers::NumberHelper
-  
+
   helper_method :current_user, :logged_in?
 
   private
