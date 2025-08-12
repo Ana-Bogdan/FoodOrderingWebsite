@@ -63,7 +63,7 @@
       <p class="category"><%= product.category %></p>
       <p class="price">$<%= number_with_precision(product.price, precision: 2) %></p>
       <% if logged_in? %>
-        <%= button_to "Add to Cart", add_to_cart_path(product), method: :post, class: "add-to-cart-btn", form: { style: "display: inline;" } %>
+        <%= button_to "Add to Cart", add_to_cart_path, method: :post, params: { product_id: product.id }, class: "add-to-cart-btn", form: { style: "display: inline;" } %>
       <% end %>
     </div>
   <% end %>

@@ -6,7 +6,7 @@ class CartController < ApplicationController
     @cart_items = @cart.cart_items.includes(:product)
   end
 
-  def add_item
+  def create
     product = Product.find(params[:product_id])
     cart_item = @cart.cart_items.find_by(product: product)
 
@@ -19,7 +19,7 @@ class CartController < ApplicationController
     redirect_back(fallback_location: root_path, notice: "#{product.name} added to cart!")
   end
 
-  def remove_item
+  def destroy
     cart_item = @cart.cart_items.find(params[:id])
     product_name = cart_item.product.name
     cart_item.destroy
@@ -27,22 +27,24 @@ class CartController < ApplicationController
     redirect_to cart_path, notice: "#{product_name} removed from cart!"
   end
 
-  def increment_quantity
+  def update
     cart_item = @cart.cart_items.find(params[:id])
-    cart_item.update(quantity: cart_item.quantity + 1)
+    action = params[:action_type]
 
-    redirect_to cart_path, notice: "#{cart_item.product.name} quantity increased!"
-  end
-
-  def decrement_quantity
-    cart_item = @cart.cart_items.find(params[:id])
-
-    if cart_item.quantity > 1
-      cart_item.update(quantity: cart_item.quantity - 1)
-      redirect_to cart_path, notice: "#{cart_item.product.name} quantity decreased!"
+    case action
+    when 'increment'
+      cart_item.update(quantity: cart_item.quantity + 1)
+      redirect_to cart_path, notice: "#{cart_item.product.name} quantity increased!"
+    when 'decrement'
+      if cart_item.quantity > 1
+        cart_item.update(quantity: cart_item.quantity - 1)
+        redirect_to cart_path, notice: "#{cart_item.product.name} quantity decreased!"
+      else
+        cart_item.destroy
+        redirect_to cart_path, notice: "#{cart_item.product.name} removed from cart!"
+      end
     else
-      cart_item.destroy
-      redirect_to cart_path, notice: "#{cart_item.product.name} removed from cart!"
+      redirect_to cart_path, alert: "Invalid action."
     end
   end
 

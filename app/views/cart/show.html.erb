@@ -30,9 +30,9 @@
             <div class="quantity-controls">
               <span class="quantity-label">Quantity:</span>
               <div class="quantity-buttons">
-                <%= button_to "-", decrement_cart_item_path(cart_item), method: :patch, class: "quantity-btn quantity-decrease", form: { style: "display: inline;" } %>
+                <%= button_to "-", update_cart_item_path(cart_item), method: :patch, params: { action_type: 'decrement' }, class: "quantity-btn quantity-decrease", form: { style: "display: inline;" } %>
                 <span class="quantity-display"><%= cart_item.quantity %></span>
-                <%= button_to "+", increment_cart_item_path(cart_item), method: :patch, class: "quantity-btn quantity-increase", form: { style: "display: inline;" } %>
+                <%= button_to "+", update_cart_item_path(cart_item), method: :patch, params: { action_type: 'increment' }, class: "quantity-btn quantity-increase", form: { style: "display: inline;" } %>
               </div>
             </div>
           </div>
