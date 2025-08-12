@@ -1,17 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('Script loaded successfully');
-  
+document.addEventListener('DOMContentLoaded', function() {  
   initializeFiltering();
 });
 
 function initializeFiltering() {
-  console.log('Initializing filtering...');
-  
   const priceMin = document.getElementById('price-min');
   const priceMax = document.getElementById('price-max');
-  
-  console.log('Price min element:', priceMin);
-  console.log('Price max element:', priceMax);
   
   if (!priceMin || !priceMax) {
     console.error('Price sliders not found');
@@ -46,7 +39,6 @@ function initializeFiltering() {
 
   // Price slider event listeners
   priceMin.addEventListener('input', () => {
-    console.log('Price min changed:', priceMin.value);
     if (Number(priceMin.value) > Number(priceMax.value)) {
       priceMin.value = priceMax.value;
     }
@@ -55,7 +47,6 @@ function initializeFiltering() {
   });
 
   priceMax.addEventListener('input', () => {
-    console.log('Price max changed:', priceMax.value);
     if (Number(priceMax.value) < Number(priceMin.value)) {
       priceMax.value = priceMin.value;
     }
@@ -68,12 +59,10 @@ function initializeFiltering() {
 
   // Dropdown functionality
   const chevronLabels = document.querySelectorAll('.chevron-label');
-  console.log('Found chevron labels:', chevronLabels.length);
   
   chevronLabels.forEach(label => {
     label.addEventListener('click', (e) => {
       e.stopPropagation();
-      console.log('Dropdown clicked:', label.getAttribute('data-label'));
       
       // Close other dropdowns
       chevronLabels.forEach(l => {
@@ -89,7 +78,6 @@ function initializeFiltering() {
       if (dropdown) {
         const isOpen = dropdown.style.display === 'block';
         dropdown.style.display = isOpen ? 'none' : 'block';
-        console.log('Dropdown display set to:', dropdown.style.display);
         if (!isOpen) {
           label.classList.add('active');
         } else {
@@ -116,7 +104,6 @@ function initializeFiltering() {
     dropdown.querySelectorAll('.option').forEach(option => {
       option.addEventListener('click', (e) => {
         e.stopPropagation();
-        console.log('Option selected:', option.textContent);
         
         // Remove selected class from all options in this dropdown
         dropdown.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -128,15 +115,12 @@ function initializeFiltering() {
         const labelType = label.getAttribute('data-label');
         if (labelType === 'CATEGORY') {
           selectedCategory = option.textContent;
-          console.log('Category selected:', selectedCategory);
         }
         if (labelType === 'SORTING') {
           selectedSort = option.textContent;
-          console.log('Sorting selected:', selectedSort);
         }
         if (labelType === 'VEGETARIAN') {
           selectedVegetarian = option.textContent;
-          console.log('Vegetarian selected:', selectedVegetarian);
         }
         
         // Close dropdown
@@ -150,17 +134,10 @@ function initializeFiltering() {
   });
 
   function filterMenu() {
-    console.log('Filtering menu...');
-    console.log('Category:', selectedCategory);
-    console.log('Vegetarian:', selectedVegetarian);
-    console.log('Sorting:', selectedSort);
-    
     const min = Math.min(Number(priceMin.value), Number(priceMax.value));
     const max = Math.max(Number(priceMin.value), Number(priceMax.value));
-    console.log('Price range:', min, '-', max);
     
     const items = document.querySelectorAll('.menu-item');
-    console.log('Total items found:', items.length);
     
     items.forEach(item => {
       const price = Number(item.getAttribute('data-price'));
@@ -189,7 +166,6 @@ function initializeFiltering() {
 
     // Sorting
     let sortedItems = Array.from(items).filter(item => item.style.display !== 'none');
-    console.log('Visible items after filtering:', sortedItems.length);
     
     if (selectedSort === 'Price: Low to High') {
       sortedItems.sort((a, b) => {
