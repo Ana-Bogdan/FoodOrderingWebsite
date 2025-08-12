@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   # Authentication routes
-  get "login", to: "auth#login"
-  post "login", to: "auth#login"
-  get "register", to: "auth#register"
-  post "register", to: "auth#register"
-  get "logout", to: "auth#logout"
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  get "logout", to: "sessions#destroy"
+  get "signup", to: "registrations#new"
+  post "signup", to: "registrations#create"
 
   # Cart routes
   get "cart", to: "cart#show"
