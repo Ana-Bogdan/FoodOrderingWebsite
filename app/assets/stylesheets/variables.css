@@ -1,0 +1,10 @@
+:root {
+  --white: #fff;
+  --white-alt: #fafafa;
+  --accent-color: #f57c00;
+  --background-color: #fff;
+  --text-color: #333;
+  --light-gray: #f5f5f5;
+  --dark-overlay: rgba(0, 0, 0, 0.5);
+    --nav-height: 60px;
+}
