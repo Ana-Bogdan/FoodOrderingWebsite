@@ -9,7 +9,7 @@ html, body {
 .hero {
     position: relative;
     height: 425px;
-    background: url('https://npr.brightspotcdn.com/dims4/default/89e88d0/2147483647/strip/true/crop/1200x793+0+0/resize/880x582!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Fa2%2Fa9%2Fd41b45004f408a9166cf67e5ff90%2Ffox-and-pearl-credit-pilson-photo-co-op.png') center/cover no-repeat;
+    background: url('/images/hero-background.png') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
