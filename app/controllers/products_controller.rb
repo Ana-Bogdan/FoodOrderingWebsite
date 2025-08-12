@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  skip_before_action :require_login, only: %i[ index show ]
   before_action :set_product, only: %i[ show edit update destroy ]
   before_action :require_admin, only: %i[ dashboard new create edit update destroy ]
 

@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :require_login
   before_action :require_admin
   before_action :set_order, only: [ :toggle_status ]
 

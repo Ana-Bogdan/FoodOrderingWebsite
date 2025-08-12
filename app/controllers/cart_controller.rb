@@ -1,5 +1,4 @@
 class CartController < ApplicationController
-  before_action :require_login
   before_action :ensure_cart_exists
   before_action :set_cart
 
