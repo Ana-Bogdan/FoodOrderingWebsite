@@ -13,9 +13,11 @@ Rails.application.routes.draw do
   patch "cart/:id", to: "cart#update", as: :update_cart_item
   post "cart/place_order", to: "cart#place_order", as: :place_order
 
-  # Orders routes (admin only)
+  # Orders routes
   resources :orders, only: [ :index, :destroy ]
   patch "orders/:id/toggle_status", to: "orders#toggle_status", as: :toggle_order_status
+  patch "orders/:id/cancel", to: "orders#cancel", as: :cancel_order
+  get "my_orders", to: "orders#my_orders", as: :my_orders
 
   root "products#index"
   resources :products
