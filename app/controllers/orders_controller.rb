@@ -9,10 +9,10 @@ class OrdersController < ApplicationController
   def toggle_status
     if @order.completed?
       @order.update(status: :pending)
-      flash[:notice] = "Order marked as pending"
+      flash[:notice] = "Order ##{@order.id} marked as pending."
     else
       @order.update(status: :completed)
-      flash[:notice] = "Order marked as completed"
+      flash[:notice] = "Order ##{@order.id} marked as completed!"
     end
 
     redirect_to orders_path
@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
 
   def destroy
     @order.destroy
-    flash[:notice] = "Order ##{@order.id} has been removed"
+    flash[:notice] = "Order ##{@order.id} has been removed."
     redirect_to orders_path
   end
 
