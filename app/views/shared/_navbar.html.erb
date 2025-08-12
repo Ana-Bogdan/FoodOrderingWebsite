@@ -10,10 +10,9 @@
     <li><%= link_to "HOME", root_path %></li>
     <li><a href="#">ABOUT</a></li>
     <li><a href="#">SERVICE</a></li>
-    <li><a href="#">BLOG</a></li>
-    <li><a href="#">CONTACTS</a></li>
+    <li><a href="#">CONTACT</a></li>
     <% if logged_in? && current_user.admin? %>
-      <li><%= link_to "DASHBOARD", dashboard_path %></li>
+      <li><%= link_to "PRODUCTS", dashboard_path %></li>
       <li><%= link_to "ORDERS", orders_path %></li>
     <% end %>
     <% if logged_in? && current_user.cart %>

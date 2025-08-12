@@ -1,7 +1,7 @@
-<% content_for :title, "Eureka Caffe - Admin Orders" %>
+<% content_for :title, "Eureka Caffe - Order Dashboard" %>
 
 <% content_for :hero_content do %>
-  <%= render 'shared/hero', title: 'Admin Orders Dashboard', description: 'Manage and track all customer orders.' %>
+  <%= render 'shared/hero', title: 'Order Dashboard', description: 'Manage and track all customer orders.' %>
 <% end %>
 
 <div class="orders-container">
@@ -33,6 +33,9 @@
                 <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
                   Complete
                 <% end %>
+              <% end %>
+              <%= button_to order_path(order), method: :delete, class: "remove-btn", title: "Remove order", data: { confirm: "Are you sure you want to remove this order?" } do %>
+                <i class="fas fa-trash"></i> Remove
               <% end %>
             </div>
           </div>

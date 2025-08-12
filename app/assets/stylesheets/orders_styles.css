@@ -29,7 +29,7 @@
 }
 
 .order-header {
-  background: #bda688;
+  background: #C7BCAF;
   color: white;
   padding: 1.5rem;
   display: flex;
@@ -67,8 +67,8 @@
 }
 
 .order-status.pending {
-  background: rgba(255, 193, 7, 0.2);
-  color: #ffc107;
+  background: rgba(245, 124, 0, 0.2);
+  color: #f57c00;
 }
 
 .order-status.completed {
@@ -78,7 +78,9 @@
 
 .order-actions {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
+  align-items: flex-end;
 }
 
 .status-btn {
@@ -92,6 +94,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 120px;
+  justify-content: center;
 }
 
 .status-btn:hover {
@@ -100,13 +104,13 @@
 }
 
 .btn-warning {
-  background: #ffc107;
-  color: #212529;
+  background: #f57c00;
+  color: white;
 }
 
 .btn-warning:hover {
-  background: #e0a800;
-  color: #212529;
+  background: #e65100;
+  color: white;
 }
 
 .btn-success {
@@ -117,6 +121,34 @@
 .btn-success:hover {
   background: #218838;
   color: white;
+}
+
+.remove-btn {
+  display: inline-block;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  background: #dc3545;
+  color: white;
+  text-align: center;
+  min-width: 80px;
+  justify-content: center;
+  opacity: 1 !important;
+}
+
+.remove-btn:hover {
+  background: #c82333;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .order-items {

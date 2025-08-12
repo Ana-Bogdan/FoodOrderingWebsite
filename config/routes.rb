@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post "cart/place_order", to: "cart#place_order", as: :place_order
 
   # Orders routes (admin only)
-  resources :orders, only: [ :index ]
+  resources :orders, only: [ :index, :destroy ]
   patch "orders/:id/toggle_status", to: "orders#toggle_status", as: :toggle_order_status
 
   root "products#index"
