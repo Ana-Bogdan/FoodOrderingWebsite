@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :require_admin, only: [ :index, :toggle_status ]
-  before_action :set_order, only: [ :toggle_status, :destroy, :cancel ]
+  before_action :set_order, only: [ :show, :toggle_status, :destroy, :cancel ]
 
   def index
     @orders = Order.includes(:user, :order_items, :products).order(created_at: :desc)
@@ -11,10 +11,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
-    unless @order.user == current_user || current_user&.admin?
-      redirect_to my_orders_path, alert: "You can only view your own orders."
-    end
+    # @order is set by set_order before_action
   end
 
   def toggle_status
@@ -60,5 +57,7 @@ class OrdersController < ApplicationController
   def set_order
     orders_scope = current_user.admin? ? Order.all : current_user.orders
     @order = orders_scope.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to my_orders_path, alert: "Order not found or access denied."
   end
 end
