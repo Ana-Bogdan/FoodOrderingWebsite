@@ -32,10 +32,10 @@ class CartController < ApplicationController
     action = params[:action_type]
 
     case action
-    when 'increment'
+    when "increment"
       cart_item.update(quantity: cart_item.quantity + 1)
       redirect_to cart_path, notice: "#{cart_item.product.name} quantity increased!"
-    when 'decrement'
+    when "decrement"
       if cart_item.quantity > 1
         cart_item.update(quantity: cart_item.quantity - 1)
         redirect_to cart_path, notice: "#{cart_item.product.name} quantity decreased!"
