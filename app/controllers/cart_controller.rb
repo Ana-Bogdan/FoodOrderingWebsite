@@ -90,37 +90,7 @@ class CartController < ApplicationController
     end
   end
 
-  def place_order
-    if @cart.cart_items.empty?
-      redirect_to cart_path, alert: "Cannot place order with empty cart."
-      return
-    end
 
-    begin
-      ActiveRecord::Base.transaction do
-        order = current_user.orders.create!(
-          total_amount: @cart.total_price,
-          status: :pending
-        )
-
-        @cart.cart_items.each do |cart_item|
-          order.order_items.create!(
-            product: cart_item.product,
-            quantity: cart_item.quantity,
-            price_at_time: cart_item.product.price
-          )
-        end
-
-        @cart.cart_items.destroy_all
-
-        redirect_to cart_path, notice: "Order placed successfully!"
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      redirect_to cart_path, alert: "Failed to place order: #{e.message}"
-    rescue => e
-      redirect_to cart_path, alert: "Failed to place order. Please try again."
-    end
-  end
 
   private
 
