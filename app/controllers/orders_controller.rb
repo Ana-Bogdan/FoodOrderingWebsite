@@ -19,13 +19,13 @@ class OrdersController < ApplicationController
 
   def toggle_status
     case @order.status
-    when 'completed'
+    when "completed"
       @order.update(status: :pending)
       flash[:notice] = "Order ##{@order.id} marked as pending."
-    when 'pending'
+    when "pending"
       @order.update(status: :completed)
       flash[:notice] = "Order ##{@order.id} marked as completed!"
-    when 'cancelled'
+    when "cancelled"
       @order.update(status: :pending)
       flash[:notice] = "Order ##{@order.id} marked as pending."
     end

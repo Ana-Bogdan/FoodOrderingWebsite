@@ -50,7 +50,7 @@ class CartController < ApplicationController
 
   def order_again
     order = Order.find(params[:order_id])
-    
+
     unless order.user == current_user || current_user&.admin?
       redirect_to my_orders_path, alert: "You can only reorder your own orders."
       return
