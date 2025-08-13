@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :require_admin, only: [ :index, :toggle_status ]
   before_action :set_order, only: [ :show, :toggle_status, :destroy, :cancel ]
-  before_action :ensure_user_cart_exists, only: [:create]
+  before_action :ensure_user_cart_exists, only: [ :create ]
 
   def index
     @orders = Order.includes(:user, :order_items, :products).order(created_at: :desc)
@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
 
   def create
     @cart = current_user.cart
-    
+
     if @cart.cart_items.empty?
       redirect_to cart_path, alert: "Cannot place order with empty cart."
       return
