@@ -24,12 +24,12 @@
 }
 
 .order-item.completed {
-  border-left: 4px solid #28a745;
+  border-left: 4px solid var(--success-color);
   opacity: 0.8;
 }
 
 .order-header {
-  background: #C7BCAF;
+  background: var(--bg-beige);
   color: white;
   padding: 1.5rem;
   display: flex;
@@ -68,21 +68,21 @@
 
 .order-status.pending {
   background: rgba(245, 124, 0, 0.2);
-  color: #f57c00;
+  color: var(--warning-color);
 }
 
 .order-status.completed {
   background: rgba(40, 167, 69, 0.2);
-  color: #28a745;
+  color: var(--success-color);
 }
 
 .order-status.cancelled {
   background: rgba(220, 53, 69, 0.2);
-  color: #dc3545;
+  color: var(--danger-color);
 }
 
 .order-item.cancelled {
-  border-left: 4px solid #dc3545;
+  border-left: 4px solid var(--danger-color);
   opacity: 0.7;
 }
 
@@ -114,57 +114,57 @@
 }
 
 .btn-warning {
-  background: #f57c00;
+  background: var(--warning-color);
   color: white;
 }
 
 .btn-warning:hover {
-  background: #e65100;
+  background: var(--warning-hover);
   color: white;
 }
 
 .btn-success {
-  background: #28a745;
+  background: var(--success-color);
   color: white;
 }
 
 .btn-success:hover {
-  background: #218838;
+  background: var(--success-hover);
   color: white;
 }
 
 .btn-danger {
-  background: #dc3545;
+  background: var(--danger-color);
   color: white;
 }
 
 .btn-danger:hover {
-  background: #c82333;
+  background: var(--danger-hover);
   color: white;
 }
 
 .btn-secondary {
-  background: #6c757d;
+  background: var(--secondary-color);
   color: white;
 }
 
 .btn-secondary:hover {
-  background: #5a6268;
+  background: var(--secondary-hover);
   color: white;
 }
 
 .subtotal-display {
   text-align: right;
   padding: 0.5rem;
-  background: #f8f9fa;
+  background: var(--bg-light);
   border-radius: 6px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--border-light);
 }
 
 .subtotal-label {
   display: block;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-muted);
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
@@ -173,11 +173,11 @@
   display: block;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .order-summary {
-  background: #C7BCAF;
+  background: var(--bg-beige);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   padding: 2rem;
@@ -223,12 +223,12 @@
 
 .order-status.pending {
   background: rgba(245, 124, 0, 0.2);
-  color: #f57c00;
+  color: var(--warning-color);
 }
 
 .order-status.completed {
   background: rgba(40, 167, 69, 0.2);
-  color: #28a745;
+  color: var(--success-color);
 }
 
 .order-actions {
@@ -250,7 +250,7 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 0.8rem;
-  background: #dc3545;
+  background: var(--danger-color);
   color: white;
   text-align: center;
   min-width: 80px;
@@ -259,7 +259,7 @@
 }
 
 .remove-btn:hover {
-  background: #c82333;
+  background: var(--danger-hover);
   color: white;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -278,7 +278,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem;
-  background: #dc3545;
+  background: var(--danger-color);
   color: white;
   text-align: center;
   min-width: 75px;
@@ -287,7 +287,7 @@
 }
 
 .cancel-btn:hover {
-  background: #c82333;
+  background: var(--danger-hover);
   color: white;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -301,7 +301,7 @@
   display: flex;
   gap: 1rem;
   padding: 1rem 0;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .order-product:last-child {
@@ -313,7 +313,7 @@
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--border-color);
 }
 
 .product-details {
@@ -322,30 +322,30 @@
 
 .product-details h4 {
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color: var(--text-dark);
   font-size: 1.1rem;
 }
 
 .product-price, .product-quantity, .product-subtotal {
   margin: 0.25rem 0;
-  color: #666;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
 .product-subtotal {
   font-weight: 600;
-  color: #495057;
+  color: var(--text-medium);
 }
 
 .order-footer {
-  background: #f8f9fa;
+  background: var(--bg-light);
   padding: 1.5rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--border-color);
 }
 
 .order-total h4 {
   margin: 0;
-  color: #333;
+  color: var(--text-dark);
   font-size: 1.3rem;
   text-align: right;
 }
@@ -359,11 +359,11 @@
 }
 
 .empty-orders h2 {
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 1rem;
 }
 
 .empty-orders p {
-  color: #666;
+  color: var(--text-muted);
   font-size: 1.1rem;
 }
