@@ -5,60 +5,22 @@
 <% end %>
 
 <div class="cart-container">
-  <div class="order-summary">
-    <div class="order-header">
-      <div class="order-info">
-        <h2>Order #<%= @order.id %></h2>
-        <div class="order-meta">
-          <p><strong>Order Date:</strong> <%= @order.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
-          <p><strong>Status:</strong> 
-            <span class="order-status <%= @order.status %>">
-              <%= @order.status.capitalize %>
-            </span>
-          </p>
-          <p><strong>Total Items:</strong> <%= @order.item_count %></p>
-        </div>
-      </div>
-      <div class="order-actions">
-        <%= link_to "← Back to My Orders", my_orders_path, class: "btn btn-secondary" %>
-        <% if @order.pending? %>
-          <%= button_to cancel_order_path(@order), method: :patch, class: "cancel-btn", title: "Cancel order", data: { confirm: "Are you sure you want to cancel this order?" } do %>
-            <i class="fas fa-times"></i> Cancel Order
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="cart-items">
-    <% @order.order_items.each do |order_item| %>
-      <div class="cart-item">
-        <div class="cart-item-image">
-          <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
-        </div>
-        <div class="cart-item-details">
-          <h3><%= order_item.product.name %></h3>
-          <p class="cart-item-price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></p>
-          <div class="cart-item-quantity">
-            <span class="quantity-label">Quantity: <%= order_item.quantity %></span>
-          </div>
-        </div>
-        <div class="cart-item-actions">
-          <div class="subtotal-display">
-            <span class="subtotal-label">Subtotal:</span>
-            <span class="subtotal-amount">$<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></span>
-          </div>
-        </div>
-      </div>
+  <% summary_actions = capture do %>
+    <%= link_to "← Back to My Orders", my_orders_path, class: "btn btn-secondary" %>
+    <% if @order.pending? %>
+      <%= button_to cancel_order_path(@order), method: :patch, class: "cancel-btn", title: "Cancel order", data: { confirm: "Are you sure you want to cancel this order?" } do %>
+        <i class="fas fa-times"></i> Cancel Order
+      <% end %>
     <% end %>
-  </div>
+  <% end %>
   
-  <div class="cart-summary">
-    <div class="cart-total">
-      <h3>Total: $<%= number_with_precision(@order.total_amount, precision: 2) %></h3>
-    </div>
-    <div class="cart-actions">
-      <%= button_to "Order Again", order_again_path(@order), method: :post, class: "btn btn-primary place-order-btn", data: { confirm: "Add all items from this order to your cart?" } %>
-    </div>
-  </div>
+  <%= render 'order_summary_header', order: @order, summary_actions: summary_actions %>
+
+  <%= render 'cart_items_list', order: @order %>
+  
+  <% cart_actions = capture do %>
+    <%= button_to "Order Again", order_again_path(@order), method: :post, class: "btn btn-primary place-order-btn", data: { confirm: "Add all items from this order to your cart?" } %>
+  <% end %>
+  
+  <%= render 'cart_summary', order: @order, cart_actions: cart_actions %>
 </div>

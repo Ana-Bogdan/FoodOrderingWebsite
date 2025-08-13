@@ -1,0 +1,5 @@
+<div class="cart-items">
+  <% order.order_items.each do |order_item| %>
+    <%= render 'cart_item', order_item: order_item %>
+  <% end %>
+</div>

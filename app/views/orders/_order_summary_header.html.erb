@@ -1,0 +1,21 @@
+<div class="order-summary">
+  <div class="order-header">
+    <div class="order-info">
+      <h2>Order #<%= order.id %></h2>
+      <div class="order-meta">
+        <p><strong>Order Date:</strong> <%= order.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+        <p><strong>Status:</strong> 
+          <span class="order-status <%= order.status %>">
+            <%= order.status.capitalize %>
+          </span>
+        </p>
+        <p><strong>Total Items:</strong> <%= order.item_count %></p>
+      </div>
+    </div>
+    <div class="order-actions">
+      <% if local_assigns[:summary_actions] %>
+        <%= local_assigns[:summary_actions].html_safe %>
+      <% end %>
+    </div>
+  </div>
+</div>
