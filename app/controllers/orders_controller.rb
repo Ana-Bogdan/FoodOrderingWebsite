@@ -15,34 +15,49 @@ class OrdersController < ApplicationController
   end
 
   def toggle_status
-    case @order.status
-    when "completed"
-      @order.update(status: :pending)
-      flash[:notice] = "Order ##{@order.id} marked as pending."
-    when "pending"
-      @order.update(status: :completed)
-      flash[:notice] = "Order ##{@order.id} marked as completed!"
-    when "cancelled"
-      @order.update(status: :pending)
-      flash[:notice] = "Order ##{@order.id} marked as pending."
-    end
+    begin
+      case @order.status
+      when "completed"
+        @order.update(status: :pending)
+        flash[:notice] = "Order ##{@order.id} marked as pending."
+      when "pending"
+        @order.update(status: :completed)
+        flash[:notice] = "Order ##{@order.id} marked as completed!"
+      when "cancelled"
+        @order.update(status: :pending)
+        flash[:notice] = "Order ##{@order.id} marked as pending."
+      end
 
-    redirect_to orders_path
+      redirect_to orders_path
+    rescue => e
+      flash[:alert] = "Failed to update order status. Please try again."
+      redirect_to orders_path
+    end
   end
 
   def destroy
-    @order.destroy
-    flash[:notice] = "Order ##{@order.id} has been removed."
-    redirect_to orders_path
+    begin
+      @order.destroy
+      flash[:notice] = "Order ##{@order.id} has been removed."
+      redirect_to orders_path
+    rescue => e
+      flash[:alert] = "Failed to delete order. Please try again."
+      redirect_to orders_path
+    end
   end
 
   def cancel
-    if @order.user == current_user
-      @order.update(status: :cancelled)
-      flash[:notice] = "Order ##{@order.id} has been cancelled."
+    begin
+      if @order.user == current_user
+        @order.update(status: :cancelled)
+        flash[:notice] = "Order ##{@order.id} has been cancelled."
+        redirect_to my_orders_path
+      else
+        redirect_to my_orders_path, alert: "You can only cancel your own orders."
+      end
+    rescue => e
+      flash[:alert] = "Failed to cancel order. Please try again."
       redirect_to my_orders_path
-    else
-      redirect_to my_orders_path, alert: "You can only cancel your own orders."
     end
   end
 
