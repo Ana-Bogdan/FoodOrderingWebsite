@@ -1,5 +1,5 @@
 class CartController < ApplicationController
-  before_action :ensure_cart_exists
+  before_action :ensure_user_cart_exists
   before_action :set_cart
 
   def show

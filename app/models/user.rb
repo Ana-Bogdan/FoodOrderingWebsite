@@ -11,11 +11,11 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, on: :create
   validates :password_confirmation, presence: true, on: :create
 
-  after_create :create_cart
+  after_create :ensure_cart_exists
 
   private
 
-  def create_cart
+  def ensure_cart_exists
     build_cart.save!
   end
 end

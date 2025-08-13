@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def ensure_cart_exists
+  def ensure_user_cart_exists
     if current_user && !current_user.cart
-      current_user.create_cart!
+      current_user.build_cart.save!
     end
   end
 end
