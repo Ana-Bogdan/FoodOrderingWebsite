@@ -1,0 +1,23 @@
+<div class="order-header">
+  <div class="order-info">
+    <h3>Order #<%= order.id %></h3>
+    <div class="order-meta">
+      <% if local_assigns[:show_customer_info] %>
+        <span class="customer-info">
+          <strong><%= order.user.name %></strong> (<%= order.user.email %>)
+        </span>
+      <% end %>
+      <span class="order-date">
+        <%= order.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+      </span>
+      <span class="order-status <%= order.status %>">
+        <%= order.status.capitalize %>
+      </span>
+    </div>
+  </div>
+  <div class="order-actions">
+    <% if local_assigns[:order_actions] %>
+      <%= local_assigns[:order_actions].html_safe %>
+    <% end %>
+  </div>
+</div>

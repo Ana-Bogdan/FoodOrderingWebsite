@@ -1,0 +1,11 @@
+<div class="order-product">
+  <div class="product-image">
+    <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
+  </div>
+  <div class="product-details">
+    <h4><%= order_item.product.name %></h4>
+    <p class="product-price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></p>
+    <p class="product-quantity">Quantity: <%= order_item.quantity %></p>
+    <p class="product-subtotal">Subtotal: $<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></p>
+  </div>
+</div>

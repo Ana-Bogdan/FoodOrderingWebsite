@@ -1,0 +1,5 @@
+<div class="order-items">
+  <% order.order_items.each do |order_item| %>
+    <%= render 'order_item', order_item: order_item %>
+  <% end %>
+</div>

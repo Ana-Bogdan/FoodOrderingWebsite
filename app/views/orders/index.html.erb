@@ -9,70 +9,35 @@
     <div class="orders-list">
       <% @orders.each do |order| %>
         <div class="order-item <%= order.status %>">
-          <div class="order-header">
-            <div class="order-info">
-              <h3>Order #<%= order.id %></h3>
-              <div class="order-meta">
-                <span class="customer-info">
-                  <strong><%= order.user.name %></strong> (<%= order.user.email %>)
-                </span>
-                <span class="order-date">
-                  <%= order.created_at.strftime("%B %d, %Y at %I:%M %p") %>
-                </span>
-                <span class="order-status <%= order.status %>">
-                  <%= order.status.capitalize %>
-                </span>
-              </div>
-            </div>
-            <div class="order-actions">
-              <% case order.status %>
-              <% when 'completed' %>
-                <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-success status-btn", title: "Mark as pending" do %>
-                  <i class="fas fa-check"></i> Completed
-                <% end %>
-              <% when 'pending' %>
-                <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
-                  Complete
-                <% end %>
-              <% when 'cancelled' %>
-                <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-secondary status-btn", title: "Mark as pending" do %>
-                  <i class="fas fa-undo"></i> Reactivate
-                <% end %>
+          <% order_actions = capture do %>
+            <% case order.status %>
+            <% when 'completed' %>
+              <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-success status-btn", title: "Mark as pending" do %>
+                <i class="fas fa-check"></i> Completed
               <% end %>
-              <%= button_to order_path(order), method: :delete, class: "remove-btn", title: "Remove order", data: { confirm: "Are you sure you want to remove this order?" } do %>
-                <i class="fas fa-trash"></i> Remove
+            <% when 'pending' %>
+              <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
+                Complete
               <% end %>
-            </div>
-          </div>
-          
-          <div class="order-items">
-            <% order.order_items.each do |order_item| %>
-              <div class="order-product">
-                <div class="product-image">
-                  <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
-                </div>
-                <div class="product-details">
-                  <h4><%= order_item.product.name %></h4>
-                  <p class="product-price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></p>
-                  <p class="product-quantity">Quantity: <%= order_item.quantity %></p>
-                  <p class="product-subtotal">Subtotal: $<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></p>
-                </div>
-              </div>
+            <% when 'cancelled' %>
+              <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-secondary status-btn", title: "Mark as pending" do %>
+                <i class="fas fa-undo"></i> Reactivate
+              <% end %>
             <% end %>
-          </div>
+            <%= button_to order_path(order), method: :delete, class: "remove-btn", title: "Remove order", data: { confirm: "Are you sure you want to remove this order?" } do %>
+              <i class="fas fa-trash"></i> Remove
+            <% end %>
+          <% end %>
           
-          <div class="order-footer">
-            <div class="order-total">
-              <h4>Total: $<%= number_with_precision(order.total_amount, precision: 2) %></h4>
-            </div>
-          </div>
+          <%= render 'order_header', order: order, show_customer_info: true, order_actions: order_actions %>
+          
+          <%= render 'order_items_list', order: order %>
+          
+          <%= render 'order_footer', order: order %>
         </div>
       <% end %>
     </div>
   <% else %>
-    <div class="empty-orders">
-      <h2>No orders found</h2>
-      <p>Orders will appear here once customers place them.</p>
-    </div>
+    <%= render 'empty_orders', title: 'No orders found', description: 'Orders will appear here once customers place them.' %>
   <% end %>
 </div> 

@@ -9,54 +9,25 @@
     <div class="orders-list">
       <% @orders.each do |order| %>
         <div class="order-item <%= order.status %>">
-          <div class="order-header">
-            <div class="order-info">
-              <h3>Order #<%= order.id %></h3>
-              <div class="order-meta">
-                <span class="order-date">
-                  <%= order.created_at.strftime("%B %d, %Y at %I:%M %p") %>
-                </span>
-                <span class="order-status <%= order.status %>">
-                  <%= order.status.capitalize %>
-                </span>
-              </div>
-            </div>
-            <div class="order-actions">
-              <%= link_to order_path(order), class: "btn btn-primary", title: "View order details" do %>
-                <i class="fas fa-eye"></i> View Details
-              <% end %>
-            </div>
-          </div>
-          
-          <div class="order-items">
-            <% order.order_items.each do |order_item| %>
-              <div class="order-product">
-                <div class="product-image">
-                  <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
-                </div>
-                <div class="product-details">
-                  <h4><%= order_item.product.name %></h4>
-                  <p class="product-price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></p>
-                  <p class="product-quantity">Quantity: <%= order_item.quantity %></p>
-                  <p class="product-subtotal">Subtotal: $<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></p>
-                </div>
-              </div>
+          <% order_actions = capture do %>
+            <%= link_to order_path(order), class: "btn btn-primary", title: "View order details" do %>
+              <i class="fas fa-eye"></i> View Details
             <% end %>
-          </div>
+          <% end %>
           
-          <div class="order-footer">
-            <div class="order-total">
-              <h4>Total: $<%= number_with_precision(order.total_amount, precision: 2) %></h4>
-            </div>
-          </div>
+          <%= render 'order_header', order: order, order_actions: order_actions %>
+          
+          <%= render 'order_items_list', order: order %>
+          
+          <%= render 'order_footer', order: order %>
         </div>
       <% end %>
     </div>
   <% else %>
-    <div class="empty-orders">
-      <h2>No orders yet</h2>
-      <p>You haven't placed any orders yet. Start by adding items to your cart!</p>
+    <% action_button = capture do %>
       <%= link_to "Browse Products", root_path, class: "btn btn-primary" %>
-    </div>
+    <% end %>
+    
+    <%= render 'empty_orders', title: 'No orders yet', description: "You haven't placed any orders yet. Start by adding items to your cart!", action_button: action_button %>
   <% end %>
 </div>
