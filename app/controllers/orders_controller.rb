@@ -58,6 +58,7 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.find(params[:id])
+    orders_scope = current_user.admin? ? Order.all : current_user.orders
+    @order = orders_scope.find(params[:id])
   end
 end
