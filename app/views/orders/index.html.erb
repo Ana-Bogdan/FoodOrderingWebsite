@@ -8,7 +8,7 @@
   <% if @orders.any? %>
     <div class="orders-list">
       <% @orders.each do |order| %>
-        <div class="order-item <%= 'completed' if order.completed? %>">
+        <div class="order-item <%= order.status %>">
           <div class="order-header">
             <div class="order-info">
               <h3>Order #<%= order.id %></h3>
@@ -25,13 +25,18 @@
               </div>
             </div>
             <div class="order-actions">
-              <% if order.completed? %>
+              <% case order.status %>
+              <% when 'completed' %>
                 <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-success status-btn", title: "Mark as pending" do %>
                   <i class="fas fa-check"></i> Completed
                 <% end %>
-              <% else %>
+              <% when 'pending' %>
                 <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
                   Complete
+                <% end %>
+              <% when 'cancelled' %>
+                <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-secondary status-btn", title: "Mark as pending" do %>
+                  <i class="fas fa-undo"></i> Reactivate
                 <% end %>
               <% end %>
               <%= button_to order_path(order), method: :delete, class: "remove-btn", title: "Remove order", data: { confirm: "Are you sure you want to remove this order?" } do %>

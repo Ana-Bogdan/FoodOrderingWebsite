@@ -76,6 +76,16 @@
   color: #28a745;
 }
 
+.order-status.cancelled {
+  background: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+}
+
+.order-item.cancelled {
+  border-left: 4px solid #dc3545;
+  opacity: 0.7;
+}
+
 .order-actions {
   display: flex;
   flex-direction: column;
@@ -94,7 +104,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  min-width: 120px;
+  min-width: 140px;
   justify-content: center;
 }
 
@@ -123,6 +133,110 @@
   color: white;
 }
 
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+  color: white;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+  color: white;
+}
+
+.subtotal-display {
+  text-align: right;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.subtotal-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.subtotal-amount {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.order-summary {
+  background: #C7BCAF;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.order-info h2 {
+  margin: 0 0 1rem 0;
+  color: white;
+  font-size: 1.8rem;
+}
+
+.order-meta p {
+  margin: 0.5rem 0;
+  color: white;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.order-summary .order-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  min-width: 80px;
+  text-align: center;
+}
+
+.order-status.pending {
+  background: rgba(245, 124, 0, 0.2);
+  color: #f57c00;
+}
+
+.order-status.completed {
+  background: rgba(40, 167, 69, 0.2);
+  color: #28a745;
+}
+
+.order-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .remove-btn {
   display: inline-block;
   border: none;
@@ -145,6 +259,34 @@
 }
 
 .remove-btn:hover {
+  background: #c82333;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-btn {
+  display: inline-block;
+  border: none;
+  padding: 0.7rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  background: #dc3545;
+  color: white;
+  text-align: center;
+  min-width: 75px;
+  justify-content: center;
+  opacity: 1 !important;
+}
+
+.cancel-btn:hover {
   background: #c82333;
   color: white;
   transform: translateY(-1px);

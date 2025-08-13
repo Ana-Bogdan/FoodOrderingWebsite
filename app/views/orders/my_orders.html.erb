@@ -8,7 +8,7 @@
   <% if @orders.any? %>
     <div class="orders-list">
       <% @orders.each do |order| %>
-        <div class="order-item <%= 'completed' if order.completed? %>">
+        <div class="order-item <%= order.status %>">
           <div class="order-header">
             <div class="order-info">
               <h3>Order #<%= order.id %></h3>
@@ -22,8 +22,8 @@
               </div>
             </div>
             <div class="order-actions">
-              <%= button_to cancel_order_path(order), method: :patch, class: "remove-btn", title: "Cancel order", data: { confirm: "Are you sure you want to cancel this order?" } do %>
-                <i class="fas fa-times"></i> Cancel
+              <%= link_to order_path(order), class: "btn btn-primary", title: "View order details" do %>
+                <i class="fas fa-eye"></i> View Details
               <% end %>
             </div>
           </div>

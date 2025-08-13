@@ -10,13 +10,24 @@ class OrdersController < ApplicationController
     @orders = current_user.orders.includes(:order_items, :products).order(created_at: :desc)
   end
 
+  def show
+    @order = Order.find(params[:id])
+    unless @order.user == current_user || current_user&.admin?
+      redirect_to my_orders_path, alert: "You can only view your own orders."
+    end
+  end
+
   def toggle_status
-    if @order.completed?
+    case @order.status
+    when 'completed'
       @order.update(status: :pending)
       flash[:notice] = "Order ##{@order.id} marked as pending."
-    else
+    when 'pending'
       @order.update(status: :completed)
       flash[:notice] = "Order ##{@order.id} marked as completed!"
+    when 'cancelled'
+      @order.update(status: :pending)
+      flash[:notice] = "Order ##{@order.id} marked as pending."
     end
 
     redirect_to orders_path
@@ -30,7 +41,7 @@ class OrdersController < ApplicationController
 
   def cancel
     if @order.user == current_user
-      @order.destroy
+      @order.update(status: :cancelled)
       flash[:notice] = "Order ##{@order.id} has been cancelled."
       redirect_to my_orders_path
     else

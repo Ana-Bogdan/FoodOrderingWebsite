@@ -1,10 +1,10 @@
 <% content_for :title, "Eureka Caffe - Order ##{@order.id}" %>
 
 <% content_for :hero_content do %>
-  <%= render 'shared/hero', title: "Order ##{@order.id}", description: "Order details and status" %>
+  <%= render 'shared/hero', title: "Order Details", description: "View your order details and status here." %>
 <% end %>
 
-<div class="order-detail-container">
+<div class="cart-container">
   <div class="order-summary">
     <div class="order-header">
       <div class="order-info">
@@ -21,50 +21,44 @@
       </div>
       <div class="order-actions">
         <%= link_to "← Back to My Orders", my_orders_path, class: "btn btn-secondary" %>
+        <% if @order.pending? %>
+          <%= button_to cancel_order_path(@order), method: :patch, class: "cancel-btn", title: "Cancel order", data: { confirm: "Are you sure you want to cancel this order?" } do %>
+            <i class="fas fa-times"></i> Cancel Order
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>
 
-  <div class="order-items-detail">
-    <h3>Order Items</h3>
-    <div class="items-list">
-      <% @order.order_items.each do |order_item| %>
-        <div class="order-item-detail">
-          <div class="product-image">
-            <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
-          </div>
-          <div class="product-info">
-            <h4><%= order_item.product.name %></h4>
-            <p class="product-category"><%= order_item.product.category %></p>
-            <div class="product-details">
-              <span class="price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></span>
-              <span class="quantity">× <%= order_item.quantity %></span>
-              <span class="subtotal">$<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></span>
-            </div>
+  <div class="cart-items">
+    <% @order.order_items.each do |order_item| %>
+      <div class="cart-item">
+        <div class="cart-item-image">
+          <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
+        </div>
+        <div class="cart-item-details">
+          <h3><%= order_item.product.name %></h3>
+          <p class="cart-item-price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></p>
+          <div class="cart-item-quantity">
+            <span class="quantity-label">Quantity: <%= order_item.quantity %></span>
           </div>
         </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="order-total-section">
-    <div class="total-card">
-      <h3>Order Summary</h3>
-      <div class="total-breakdown">
-        <div class="total-row">
-          <span>Subtotal:</span>
-          <span>$<%= number_with_precision(@order.total_amount, precision: 2) %></span>
-        </div>
-        <div class="total-row total-final">
-          <span><strong>Total:</strong></span>
-          <span><strong>$<%= number_with_precision(@order.total_amount, precision: 2) %></strong></span>
+        <div class="cart-item-actions">
+          <div class="subtotal-display">
+            <span class="subtotal-label">Subtotal:</span>
+            <span class="subtotal-amount">$<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></span>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
-
-  <div class="order-actions-bottom">
-    <%= link_to "Place New Order", root_path, class: "btn btn-primary" %>
-    <%= link_to "View All Orders", my_orders_path, class: "btn btn-secondary" %>
+  
+  <div class="cart-summary">
+    <div class="cart-total">
+      <h3>Total: $<%= number_with_precision(@order.total_amount, precision: 2) %></h3>
+    </div>
+    <div class="cart-actions">
+      <%= button_to "Order Again", order_again_path(@order), method: :post, class: "btn btn-primary place-order-btn", data: { confirm: "Add all items from this order to your cart?" } %>
+    </div>
   </div>
 </div>

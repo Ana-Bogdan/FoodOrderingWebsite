@@ -12,9 +12,10 @@ Rails.application.routes.draw do
   delete "cart/:id", to: "cart#destroy", as: :remove_from_cart
   patch "cart/:id", to: "cart#update", as: :update_cart_item
   post "cart/place_order", to: "cart#place_order", as: :place_order
+  post "cart/order_again/:order_id", to: "cart#order_again", as: :order_again
 
   # Orders routes
-  resources :orders, only: [ :index, :destroy ]
+  resources :orders, only: [ :index, :show, :destroy ]
   patch "orders/:id/toggle_status", to: "orders#toggle_status", as: :toggle_order_status
   patch "orders/:id/cancel", to: "orders#cancel", as: :cancel_order
   get "my_orders", to: "orders#my_orders", as: :my_orders

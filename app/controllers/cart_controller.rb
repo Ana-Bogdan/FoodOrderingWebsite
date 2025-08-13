@@ -48,6 +48,26 @@ class CartController < ApplicationController
     end
   end
 
+  def order_again
+    order = Order.find(params[:order_id])
+    
+    unless order.user == current_user || current_user&.admin?
+      redirect_to my_orders_path, alert: "You can only reorder your own orders."
+      return
+    end
+
+    @cart.cart_items.destroy_all
+
+    order.order_items.each do |order_item|
+      @cart.cart_items.create(
+        product: order_item.product,
+        quantity: order_item.quantity
+      )
+    end
+
+    redirect_to cart_path, notice: "Order items added to cart! Review and place your order."
+  end
+
   def place_order
     if @cart.cart_items.empty?
       redirect_to cart_path, alert: "Cannot place order with empty cart."
