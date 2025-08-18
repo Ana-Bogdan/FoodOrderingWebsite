@@ -12,15 +12,15 @@
           <% order_actions = capture do %>
             <% case order.status %>
             <% when 'completed' %>
-              <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-success status-btn", title: "Mark as pending" do %>
+              <%= button_to update_order_status_path(order), method: :patch, class: "btn btn-success status-btn", title: "Mark as pending" do %>
                 <i class="fas fa-check"></i> Completed
               <% end %>
             <% when 'pending' %>
-              <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
+              <%= button_to update_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
                 Complete
               <% end %>
             <% when 'cancelled' %>
-              <%= button_to toggle_order_status_path(order), method: :patch, class: "btn btn-secondary status-btn", title: "Mark as pending" do %>
+              <%= button_to update_order_status_path(order), method: :patch, class: "btn btn-secondary status-btn", title: "Mark as pending" do %>
                 <i class="fas fa-undo"></i> Reactivate
               <% end %>
             <% end %>

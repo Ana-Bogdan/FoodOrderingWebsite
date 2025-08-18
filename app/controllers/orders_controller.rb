@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
-  before_action :require_admin, only: [ :index, :toggle_status ]
-  before_action :set_order, only: [ :show, :toggle_status, :destroy, :cancel ]
+  before_action :require_admin, only: [ :index, :update ]
+  before_action :set_order, only: [ :show, :update, :destroy, :cancel ]
   before_action :ensure_user_cart_exists, only: [ :create ]
 
   def index
@@ -49,7 +49,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def toggle_status
+  def update
     begin
       case @order.status
       when "completed"

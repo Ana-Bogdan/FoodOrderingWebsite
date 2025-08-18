@@ -63,7 +63,7 @@ class CartController < ApplicationController
       redirect_to cart_path, alert: "Failed to remove item from cart. Please try again."
     end
   end
-  
+
   def order_again
     begin
       order = Order.find(params[:order_id])

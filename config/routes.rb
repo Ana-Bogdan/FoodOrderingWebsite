@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   # Orders routes
   resources :orders, only: [ :index, :show, :create, :destroy ]
-  patch "orders/:id/toggle_status", to: "orders#toggle_status", as: :toggle_order_status
+  patch "orders/:id/update", to: "orders#update", as: :update_order_status
   patch "orders/:id/cancel", to: "orders#cancel", as: :cancel_order
   get "my_orders", to: "orders#my_orders", as: :my_orders
 
