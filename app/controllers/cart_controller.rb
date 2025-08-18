@@ -23,20 +23,6 @@ class CartController < ApplicationController
     end
   end
 
-  def destroy
-    begin
-      cart_item = @cart.cart_items.find(params[:id])
-      product_name = cart_item.product.name
-      cart_item.destroy
-
-      redirect_to cart_path, notice: "#{product_name} removed from cart!"
-    rescue ActiveRecord::RecordNotFound
-      redirect_to cart_path, alert: "Cart item not found."
-    rescue => e
-      redirect_to cart_path, alert: "Failed to remove item from cart. Please try again."
-    end
-  end
-
   def update
     begin
       cart_item = @cart.cart_items.find(params[:id])
@@ -64,6 +50,20 @@ class CartController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      cart_item = @cart.cart_items.find(params[:id])
+      product_name = cart_item.product.name
+      cart_item.destroy
+
+      redirect_to cart_path, notice: "#{product_name} removed from cart!"
+    rescue ActiveRecord::RecordNotFound
+      redirect_to cart_path, alert: "Cart item not found."
+    rescue => e
+      redirect_to cart_path, alert: "Failed to remove item from cart. Please try again."
+    end
+  end
+  
   def order_again
     begin
       order = Order.find(params[:order_id])
@@ -89,8 +89,6 @@ class CartController < ApplicationController
       redirect_to my_orders_path, alert: "Failed to reorder. Please try again."
     end
   end
-
-
 
   private
 
