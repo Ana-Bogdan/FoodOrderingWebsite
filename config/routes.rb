@@ -1,11 +1,28 @@
 Rails.application.routes.draw do
-  # Authentication routes
+  # Devise routes for authentication (web interface)
+  devise_for :users, skip: [:sessions, :registrations]
+
+  # Custom web authentication routes
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   get "logout", to: "sessions#destroy"
   get "signup", to: "registrations#new"
   post "signup", to: "registrations#create"
 
+  # API routes - STEP 1: Authentication Only
+  namespace :api do
+    namespace :v1 do
+      # API Authentication endpoints (no CSRF required)
+      post "register", to: "auth#register"
+      post "login", to: "auth#login"
+      delete "logout", to: "auth#logout"
+      
+      # NOTE: Cart, Orders, Products API endpoints will be added in Step 2
+      # For now, we only have authentication working
+    end
+  end
+
+  # Existing web routes (keeping for now during transition)
   # Cart routes
   get "cart", to: "cart#show"
   post "cart", to: "cart#create", as: :add_to_cart
@@ -15,14 +32,13 @@ Rails.application.routes.draw do
 
   # Orders routes
   resources :orders, only: [ :index, :show, :create, :destroy ]
-  patch "orders/:id/update", to: "orders#update", as: :update_order_status
+  patch "orders/:id/update", to: "orders#update_status", as: :update_order_status
   patch "orders/:id/cancel", to: "orders#cancel", as: :cancel_order
   get "my_orders", to: "orders#my_orders", as: :my_orders
 
   root "products#index"
   resources :products
   get "dashboard", to: "products#dashboard"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

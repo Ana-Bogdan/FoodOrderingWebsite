@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :authenticate_user!
 
   def new
     # GET request - display registration form
@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
     # POST request - handle user registration
     @user = User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
+      sign_in(@user)
       redirect_to root_path, notice: "Welcome, #{@user.name}!"
     else
       flash.now[:alert] = "Registration failed. Please check your information."
