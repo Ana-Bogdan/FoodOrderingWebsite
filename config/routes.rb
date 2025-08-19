@@ -9,20 +9,16 @@ Rails.application.routes.draw do
   get "signup", to: "registrations#new"
   post "signup", to: "registrations#create"
 
-  # API routes - STEP 1: Authentication Only
+  # API routes
   namespace :api do
     namespace :v1 do
-      # API Authentication endpoints (no CSRF required)
+      # API Authentication endpoints
       post "register", to: "auth#register"
       post "login", to: "auth#login"
       delete "logout", to: "auth#logout"
-      
-      # NOTE: Cart, Orders, Products API endpoints will be added in Step 2
-      # For now, we only have authentication working
     end
   end
 
-  # Existing web routes (keeping for now during transition)
   # Cart routes
   get "cart", to: "cart#show"
   post "cart", to: "cart#create", as: :add_to_cart
