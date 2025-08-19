@@ -1,0 +1,10 @@
+<div class="cart-summary">
+  <div class="cart-total">
+    <h3>Total: $<%= number_with_precision(order.total_amount, precision: 2) %></h3>
+  </div>
+  <div class="cart-actions">
+    <% if local_assigns[:cart_actions] %>
+      <%= local_assigns[:cart_actions].html_safe %>
+    <% end %>
+  </div>
+</div>

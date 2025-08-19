@@ -1,0 +1,8 @@
+<div class="order-footer">
+  <div class="order-total">
+    <h4>Total: $<%= number_with_precision(order.total_amount, precision: 2) %></h4>
+  </div>
+  <% if local_assigns[:footer_actions] %>
+    <%= local_assigns[:footer_actions].html_safe %>
+  <% end %>
+</div>

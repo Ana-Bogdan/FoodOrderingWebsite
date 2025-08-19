@@ -1,0 +1,37 @@
+<% content_for :title, "Eureka Caffe - Login" %>
+
+<% content_for :hero_content do %>
+  <%= render 'shared/hero', title: 'Login', description: 'Welcome back! Please sign in to your account.' %>
+<% end %>
+
+<div class="auth-container">
+  <div class="auth-form">
+    <h2>Sign In</h2>
+    
+    <% if flash[:alert] %>
+      <div class="alert alert-error">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    
+    <%= form_with url: login_path, method: :post, local: true do |f| %>
+      <div class="form-group">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, required: true, placeholder: "Enter your email" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.password_field :password, required: true, placeholder: "Enter your password" %>
+      </div>
+      
+      <div class="form-actions">
+        <%= f.submit "Login", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+    
+    <div class="auth-links">
+      <p>Don't have an account? <%= link_to "Register here", signup_path, class: "link" %></p>
+    </div>
+  </div>
+</div>

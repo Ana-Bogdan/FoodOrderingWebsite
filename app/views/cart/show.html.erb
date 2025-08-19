@@ -1,0 +1,50 @@
+<% content_for :title, "Eureka Caffe - Shopping Cart" %>
+
+<% content_for :hero_content do %>
+  <%= render 'shared/hero', title: 'Shopping Cart', description: 'Review your order and proceed to checkout.' %>
+<% end %>
+
+<div class="cart-container">
+  <% if @cart_items.any? %>
+    <div class="cart-items">
+      <% @cart_items.each do |cart_item| %>
+        <div class="cart-item">
+          <div class="cart-item-image">
+            <img src="<%= cart_item.product.image %>" alt="<%= cart_item.product.name %>">
+          </div>
+          <div class="cart-item-details">
+            <h3><%= cart_item.product.name %></h3>
+            <p class="cart-item-price">$<%= number_with_precision(cart_item.product.price, precision: 2) %></p>
+            <div class="quantity-controls">
+              <span class="quantity-label">Quantity:</span>
+              <div class="quantity-buttons">
+                <%= button_to "-", update_cart_item_path(cart_item), method: :patch, params: { action_type: 'decrement' }, class: "quantity-btn quantity-decrease", form: { style: "display: inline;" } %>
+                <span class="quantity-display"><%= cart_item.quantity %></span>
+                <%= button_to "+", update_cart_item_path(cart_item), method: :patch, params: { action_type: 'increment' }, class: "quantity-btn quantity-increase", form: { style: "display: inline;" } %>
+              </div>
+            </div>
+          </div>
+          <div class="cart-item-actions">
+            <%= button_to "Remove All", remove_from_cart_path(cart_item), method: :delete, class: "remove-cart-btn", data: { confirm: "Remove all #{cart_item.product.name} from cart?" } %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="cart-summary">
+      <div class="cart-total">
+        <h3>Total: $<%= number_with_precision(@cart.total_price, precision: 2) %></h3>
+      </div>
+      <div class="cart-actions">
+        <%= link_to "Continue Shopping", root_path, class: "btn btn-secondary" %>
+        <%= button_to "Place Order", orders_path, method: :post, class: "btn btn-primary place-order-btn", data: { confirm: "Are you sure you want to place this order?" } %>
+      </div>
+    </div>
+  <% else %>
+    <div class="empty-cart">
+      <h2>Your cart is empty</h2>
+      <p>Add some delicious items to your cart to get started!</p>
+      <%= link_to "Browse Menu", root_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

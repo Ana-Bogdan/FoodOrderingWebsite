@@ -1,0 +1,369 @@
+.orders-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.order-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.order-item:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.order-item.completed {
+  border-left: 4px solid var(--success-color);
+  opacity: 0.8;
+}
+
+.order-header {
+  background: var(--bg-beige);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.order-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.order-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.customer-info {
+  font-weight: 600;
+}
+
+.order-date {
+  opacity: 0.9;
+}
+
+.order-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.order-status.pending {
+  background: rgba(245, 124, 0, 0.2);
+  color: var(--warning-color);
+}
+
+.order-status.completed {
+  background: rgba(40, 167, 69, 0.2);
+  color: var(--success-color);
+}
+
+.order-status.cancelled {
+  background: rgba(220, 53, 69, 0.2);
+  color: var(--danger-color);
+}
+
+.order-item.cancelled {
+  border-left: 4px solid var(--danger-color);
+  opacity: 0.7;
+}
+
+.order-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.status-btn {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.status-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-warning {
+  background: var(--warning-color);
+  color: white;
+}
+
+.btn-warning:hover {
+  background: var(--warning-hover);
+  color: white;
+}
+
+.btn-success {
+  background: var(--success-color);
+  color: white;
+}
+
+.btn-success:hover {
+  background: var(--success-hover);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--danger-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: var(--danger-hover);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-hover);
+  color: white;
+}
+
+.subtotal-display {
+  text-align: right;
+  padding: 0.5rem;
+  background: var(--bg-light);
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+}
+
+.subtotal-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.subtotal-amount {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.order-summary {
+  background: var(--bg-beige);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.order-info h2 {
+  margin: 0 0 1rem 0;
+  color: white;
+  font-size: 1.8rem;
+}
+
+.order-meta p {
+  margin: 0.5rem 0;
+  color: white;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.order-summary .order-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  min-width: 80px;
+  text-align: center;
+}
+
+.order-status.pending {
+  background: rgba(245, 124, 0, 0.2);
+  color: var(--warning-color);
+}
+
+.order-status.completed {
+  background: rgba(40, 167, 69, 0.2);
+  color: var(--success-color);
+}
+
+.order-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.remove-btn {
+  display: inline-block;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  background: var(--danger-color);
+  color: white;
+  text-align: center;
+  min-width: 80px;
+  justify-content: center;
+  opacity: 1 !important;
+}
+
+.remove-btn:hover {
+  background: var(--danger-hover);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-btn {
+  display: inline-block;
+  border: none;
+  padding: 0.7rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  background: var(--danger-color);
+  color: white;
+  text-align: center;
+  min-width: 75px;
+  justify-content: center;
+  opacity: 1 !important;
+}
+
+.cancel-btn:hover {
+  background: var(--danger-hover);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.order-items {
+  padding: 1.5rem;
+}
+
+.order-product {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.order-product:last-child {
+  border-bottom: none;
+}
+
+.product-image img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-details h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-dark);
+  font-size: 1.1rem;
+}
+
+.product-price, .product-quantity, .product-subtotal {
+  margin: 0.25rem 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.product-subtotal {
+  font-weight: 600;
+  color: var(--text-medium);
+}
+
+.order-footer {
+  background: var(--bg-light);
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.order-total h4 {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: 1.3rem;
+  text-align: right;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.empty-orders h2 {
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.empty-orders p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}

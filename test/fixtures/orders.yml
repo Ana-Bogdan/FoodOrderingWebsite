@@ -1,0 +1,14 @@
+one:
+  user: one
+  total_amount: 25.00
+  status: pending
+
+two:
+  user: two
+  total_amount: 35.50
+  status: completed
+
+three:
+  user: one
+  total_amount: 18.75
+  status: cancelled

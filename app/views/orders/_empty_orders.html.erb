@@ -1,0 +1,7 @@
+<div class="empty-orders">
+  <h2><%= title %></h2>
+  <p><%= description %></p>
+  <% if local_assigns[:action_button] %>
+    <%= local_assigns[:action_button].html_safe %>
+  <% end %>
+</div>

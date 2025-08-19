@@ -1,0 +1,18 @@
+<div class="cart-item">
+  <div class="cart-item-image">
+    <img src="<%= order_item.product.image %>" alt="<%= order_item.product.name %>">
+  </div>
+  <div class="cart-item-details">
+    <h3><%= order_item.product.name %></h3>
+    <p class="cart-item-price">$<%= number_with_precision(order_item.price_at_time, precision: 2) %></p>
+    <div class="cart-item-quantity">
+      <span class="quantity-label">Quantity: <%= order_item.quantity %></span>
+    </div>
+  </div>
+  <div class="cart-item-actions">
+    <div class="subtotal-display">
+      <span class="subtotal-label">Subtotal:</span>
+      <span class="subtotal-amount">$<%= number_with_precision(order_item.price_at_time * order_item.quantity, precision: 2) %></span>
+    </div>
+  </div>
+</div>

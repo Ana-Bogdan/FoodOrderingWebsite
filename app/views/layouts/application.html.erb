@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= content_for(:title) || "Eureka Caffe" %></title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "styles", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "dashboard_styles", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "orders_styles", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "script", "data-turbo-track": "reload" %>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= yield :head %>
+  </head>
+
+  <body>
+    <%= render 'shared/flashes' %>
+
+    <header class="hero">
+      <%= render 'shared/navbar' %>
+      <div class="hero-content">
+        <%= yield :hero_content %>
+      </div>
+    </header>
+
+    <%= yield %>
+  </body>
+</html>

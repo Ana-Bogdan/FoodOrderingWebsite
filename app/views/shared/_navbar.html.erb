@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="logo">
+    <img class="logo-img" src="/images/logo-img.png" alt="Eureka Caffe Logo">
+    <div class="logo-text">
+      <span class="logo-eureka">EUREKA</span><br>
+      <span class="logo-caffe">CAFFE</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><%= link_to "HOME", root_path %></li>
+    <li><a href="#">ABOUT</a></li>
+    <li><a href="#">SERVICE</a></li>
+    <li><a href="#">CONTACT</a></li>
+    <% if logged_in? && current_user.admin? %>
+      <li><%= link_to "PRODUCTS", dashboard_path %></li>
+    <% end %>
+    <% if logged_in? %>
+      <li><%= link_to "ORDERS", current_user.admin? ? orders_path : my_orders_path %></li>
+    <% end %>
+    <% if logged_in? && current_user.cart %>
+      <li><%= link_to "CART (#{current_user.cart.item_count})", cart_path %></li>
+    <% end %>
+    <li>
+      <% if logged_in? %>
+        <%= link_to "LOGOUT", logout_path %>
+      <% else %>
+        <%= link_to "LOGIN", login_path %>
+      <% end %>
+    </li>
+  </ul>
+</nav>

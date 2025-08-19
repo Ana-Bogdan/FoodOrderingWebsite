@@ -1,0 +1,43 @@
+<% content_for :title, "Eureka Caffe - Order Dashboard" %>
+
+<% content_for :hero_content do %>
+  <%= render 'shared/hero', title: 'Order Dashboard', description: 'Manage and track all customer orders.' %>
+<% end %>
+
+<div class="orders-container">
+  <% if @orders.any? %>
+    <div class="orders-list">
+      <% @orders.each do |order| %>
+        <div class="order-item <%= order.status %>">
+          <% order_actions = capture do %>
+            <% case order.status %>
+            <% when 'completed' %>
+              <%= button_to update_order_status_path(order), method: :patch, class: "btn btn-success status-btn", title: "Mark as pending" do %>
+                <i class="fas fa-check"></i> Completed
+              <% end %>
+            <% when 'pending' %>
+              <%= button_to update_order_status_path(order), method: :patch, class: "btn btn-warning status-btn", title: "Mark as completed" do %>
+                Complete
+              <% end %>
+            <% when 'cancelled' %>
+              <%= button_to update_order_status_path(order), method: :patch, class: "btn btn-secondary status-btn", title: "Mark as pending" do %>
+                <i class="fas fa-undo"></i> Reactivate
+              <% end %>
+            <% end %>
+            <%= button_to order_path(order), method: :delete, class: "remove-btn", title: "Remove order", data: { confirm: "Are you sure you want to remove this order?" } do %>
+              <i class="fas fa-trash"></i> Remove
+            <% end %>
+          <% end %>
+          
+          <%= render 'order_header', order: order, show_customer_info: true, order_actions: order_actions %>
+          
+          <%= render 'order_items_list', order: order %>
+          
+          <%= render 'order_footer', order: order %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render 'empty_orders', title: 'No orders found', description: 'Orders will appear here once customers place them.' %>
+  <% end %>
+</div> 

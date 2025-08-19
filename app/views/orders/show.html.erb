@@ -1,0 +1,26 @@
+<% content_for :title, "Eureka Caffe - Order ##{@order.id}" %>
+
+<% content_for :hero_content do %>
+  <%= render 'shared/hero', title: "Order Details", description: "View your order details and status here." %>
+<% end %>
+
+<div class="cart-container">
+  <% summary_actions = capture do %>
+    <%= link_to "← Back to My Orders", my_orders_path, class: "btn btn-secondary" %>
+    <% if @order.pending? %>
+      <%= button_to cancel_order_path(@order), method: :patch, class: "cancel-btn", title: "Cancel order", data: { confirm: "Are you sure you want to cancel this order?" } do %>
+        <i class="fas fa-times"></i> Cancel Order
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  <%= render 'order_summary_header', order: @order, summary_actions: summary_actions %>
+
+  <%= render 'cart_items_list', order: @order %>
+  
+  <% cart_actions = capture do %>
+    <%= button_to "Order Again", order_again_path(@order), method: :post, class: "btn btn-primary place-order-btn", data: { confirm: "Add all items from this order to your cart?" } %>
+  <% end %>
+  
+  <%= render 'cart_summary', order: @order, cart_actions: cart_actions %>
+</div>
