@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # Devise routes for authentication (web interface)
-  devise_for :users, skip: [:sessions, :registrations]
+  devise_for :users, skip: [ :sessions, :registrations ]
 
   # Custom web authentication routes
   get "login", to: "sessions#new"

@@ -1,15 +1,15 @@
 class Api::V1::AuthController < Api::V1::ApplicationController
-  skip_before_action :authenticate_user!, only: [:register, :login]
+  skip_before_action :authenticate_user!, only: [ :register, :login ]
 
   def register
     user = User.new(user_params)
-    
+
     if user.save
       # Generate JWT token
       token = user.generate_jwt
-      
+
       render json: {
-        status: { code: 200, message: 'User registered successfully.' },
+        status: { code: 200, message: "User registered successfully." },
         data: {
           user: {
             id: user.id,
@@ -29,13 +29,13 @@ class Api::V1::AuthController < Api::V1::ApplicationController
 
   def login
     user = User.find_by(email: login_params[:email])
-    
+
     if user&.valid_password?(login_params[:password])
       # Generate JWT token
       token = user.generate_jwt
-      
+
       render json: {
-        status: { code: 200, message: 'Logged in successfully.' },
+        status: { code: 200, message: "Logged in successfully." },
         data: {
           user: {
             id: user.id,
@@ -57,7 +57,7 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     # In a real JWT implementation, you might want to blacklist the token
     # For now, we'll just return success
     render json: {
-      status: { code: 200, message: 'Logged out successfully.' }
+      status: { code: 200, message: "Logged out successfully." }
     }
   end
 
