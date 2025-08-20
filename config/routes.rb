@@ -16,21 +16,21 @@ Rails.application.routes.draw do
       post "register", to: "auth#register"
       post "login", to: "auth#login"
       delete "logout", to: "auth#logout"
-      
+
       # Core API Endpoints
-      resources :products, only: [:index, :show]
-      resources :cart_items, only: [:index, :create, :update, :destroy]
-      resources :orders, only: [:index, :show, :create]
-      patch 'orders/:id/update_status', to: 'orders#update_status'
-      patch 'orders/:id/cancel', to: 'orders#cancel'
-      post 'orders/:id/reorder', to: 'orders#reorder'
-      get 'my_orders', to: 'orders#my_orders'
-      
+      resources :products, only: [ :index, :show ]
+      resources :cart_items, only: [ :index, :create, :update, :destroy ]
+      resources :orders, only: [ :index, :show, :create ]
+      patch "orders/:id/update_status", to: "orders#update_status"
+      patch "orders/:id/cancel", to: "orders#cancel"
+      post "orders/:id/reorder", to: "orders#reorder"
+      get "my_orders", to: "orders#my_orders"
+
       # Admin routes
       namespace :admin do
         resources :products
-        resources :orders, only: [:index, :show, :update]
-        patch 'orders/:id/update_status', to: 'orders#update_status'
+        resources :orders, only: [ :index, :show, :update ]
+        patch "orders/:id/update_status", to: "orders#update_status"
       end
     end
   end

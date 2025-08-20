@@ -1,10 +1,10 @@
 class Api::V1::OrdersController < Api::V1::ApplicationController
-  before_action :ensure_user_cart_exists, only: [:create]
+  before_action :ensure_user_cart_exists, only: [ :create ]
 
   def index
     orders = current_user.orders.includes(:order_items, :products).order(created_at: :desc)
     render json: {
-      status: { code: 200, message: 'Orders retrieved successfully.' },
+      status: { code: 200, message: "Orders retrieved successfully." },
       data: orders.map { |order| order_serializer(order) }
     }
   end
@@ -12,12 +12,12 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
   def show
     order = current_user.orders.find(params[:id])
     render json: {
-      status: { code: 200, message: 'Order retrieved successfully.' },
+      status: { code: 200, message: "Order retrieved successfully." },
       data: order_serializer(order)
     }
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Order not found.' }
+      status: { message: "Order not found." }
     }, status: :not_found
   end
 
@@ -26,7 +26,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
 
     if cart.cart_items.empty?
       render json: {
-        status: { message: 'Cannot place order with empty cart.' }
+        status: { message: "Cannot place order with empty cart." }
       }, status: :unprocessable_entity
       return
     end
@@ -49,7 +49,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
         cart.cart_items.destroy_all
 
         render json: {
-          status: { code: 200, message: 'Order placed successfully!' },
+          status: { code: 200, message: "Order placed successfully!" },
           data: order_serializer(order)
         }
       end
@@ -59,17 +59,17 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
       }, status: :unprocessable_entity
     rescue => e
       render json: {
-        status: { message: 'Failed to place order. Please try again.' }
+        status: { message: "Failed to place order. Please try again." }
       }, status: :unprocessable_entity
     end
   end
 
   def update_status
     order = current_user.orders.find(params[:id])
-    
+
     if order.update(order_params)
       render json: {
-        status: { code: 200, message: 'Order status updated successfully.' },
+        status: { code: 200, message: "Order status updated successfully." },
         data: order_serializer(order)
       }
     else
@@ -79,16 +79,16 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Order not found.' }
+      status: { message: "Order not found." }
     }, status: :not_found
   end
 
   def cancel
     order = current_user.orders.find(params[:id])
-    
+
     if order.update(status: :cancelled)
       render json: {
-        status: { code: 200, message: 'Order cancelled successfully.' },
+        status: { code: 200, message: "Order cancelled successfully." },
         data: order_serializer(order)
       }
     else
@@ -98,27 +98,27 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Order not found.' }
+      status: { message: "Order not found." }
     }, status: :not_found
   end
 
   def my_orders
     orders = current_user.orders.includes(:order_items, :products).order(created_at: :desc)
     render json: {
-      status: { code: 200, message: 'My orders retrieved successfully.' },
+      status: { code: 200, message: "My orders retrieved successfully." },
       data: orders.map { |order| order_serializer(order) }
     }
   end
 
   def reorder
     order = current_user.orders.find(params[:id])
-    
+
     # Ensure user has a cart
     ensure_user_cart_exists
-    
+
     # Clear current cart
     current_user.cart.cart_items.destroy_all
-    
+
     # Add order items back to cart
     order.order_items.each do |order_item|
       current_user.cart.cart_items.create!(
@@ -126,16 +126,16 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
         quantity: order_item.quantity
       )
     end
-    
+
     render json: {
-      status: { code: 200, message: 'Order items added to cart successfully!' },
+      status: { code: 200, message: "Order items added to cart successfully!" },
       data: {
         cart_items: current_user.cart.cart_items.map { |item| cart_item_serializer(item) }
       }
     }
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Order not found.' }
+      status: { message: "Order not found." }
     }, status: :not_found
   rescue => e
     render json: {

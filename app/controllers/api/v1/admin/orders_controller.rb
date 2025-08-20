@@ -1,18 +1,18 @@
 class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
   before_action :require_admin
-  before_action :set_order, only: [:show, :update]
+  before_action :set_order, only: [ :show, :update ]
 
   def index
     orders = Order.includes(:user, :order_items, :products).order(created_at: :desc)
     render json: {
-      status: { code: 200, message: 'Orders retrieved successfully.' },
+      status: { code: 200, message: "Orders retrieved successfully." },
       data: orders.map { |order| admin_order_serializer(order) }
     }
   end
 
   def show
     render json: {
-      status: { code: 200, message: 'Order retrieved successfully.' },
+      status: { code: 200, message: "Order retrieved successfully." },
       data: admin_order_serializer(@order)
     }
   end
@@ -20,7 +20,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
   def update
     if @order.update(order_params)
       render json: {
-        status: { code: 200, message: 'Order updated successfully.' },
+        status: { code: 200, message: "Order updated successfully." },
         data: admin_order_serializer(@order)
       }
     else
@@ -32,10 +32,10 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
 
   def update_status
     order = Order.find(params[:id])
-    
+
     if order.update(status: params[:order][:status])
       render json: {
-        status: { code: 200, message: 'Order status updated successfully.' },
+        status: { code: 200, message: "Order status updated successfully." },
         data: admin_order_serializer(order)
       }
     else
@@ -45,7 +45,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Order not found.' }
+      status: { message: "Order not found." }
     }, status: :not_found
   end
 
@@ -54,7 +54,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
   def require_admin
     unless current_user.admin?
       render json: {
-        status: { message: 'Access denied. Admin privileges required.' }
+        status: { message: "Access denied. Admin privileges required." }
       }, status: :forbidden
     end
   end
@@ -63,7 +63,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     @order = Order.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Order not found.' }
+      status: { message: "Order not found." }
     }, status: :not_found
   end
 

@@ -4,7 +4,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
   def index
     cart_items = current_user.cart.cart_items.includes(:product)
     render json: {
-      status: { code: 200, message: 'Cart items retrieved successfully.' },
+      status: { code: 200, message: "Cart items retrieved successfully." },
       data: cart_items.map { |item| cart_item_serializer(item) }
     }
   end
@@ -23,21 +23,21 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     end
 
     render json: {
-      status: { code: 200, message: 'Item added to cart successfully.' },
+      status: { code: 200, message: "Item added to cart successfully." },
       data: cart_item_serializer(cart_item)
     }
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Product not found.' }
+      status: { message: "Product not found." }
     }, status: :not_found
   end
 
   def update
     cart_item = current_user.cart.cart_items.find(params[:id])
-    
+
     if cart_item.update(cart_item_params)
       render json: {
-        status: { code: 200, message: 'Cart item updated successfully.' },
+        status: { code: 200, message: "Cart item updated successfully." },
         data: cart_item_serializer(cart_item)
       }
     else
@@ -47,7 +47,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     end
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Cart item not found.' }
+      status: { message: "Cart item not found." }
     }, status: :not_found
   end
 
@@ -56,11 +56,11 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     cart_item.destroy
 
     render json: {
-      status: { code: 200, message: 'Item removed from cart successfully.' }
+      status: { code: 200, message: "Item removed from cart successfully." }
     }
   rescue ActiveRecord::RecordNotFound
     render json: {
-      status: { message: 'Cart item not found.' }
+      status: { message: "Cart item not found." }
     }, status: :not_found
   end
 
