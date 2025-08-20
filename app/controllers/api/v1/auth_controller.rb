@@ -5,7 +5,6 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     user = User.new(user_params)
 
     if user.save
-      # Generate JWT token
       token = user.generate_jwt
 
       render json: {
@@ -31,7 +30,6 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     user = User.find_by(email: login_params[:email])
 
     if user&.valid_password?(login_params[:password])
-      # Generate JWT token
       token = user.generate_jwt
 
       render json: {
@@ -54,8 +52,6 @@ class Api::V1::AuthController < Api::V1::ApplicationController
   end
 
   def logout
-    # In a real JWT implementation, you might want to blacklist the token
-    # For now, we'll just return success
     render json: {
       status: { code: 200, message: "Logged out successfully." }
     }
