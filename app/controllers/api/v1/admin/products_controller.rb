@@ -6,14 +6,14 @@ class Api::V1::Admin::ProductsController < Api::V1::ApplicationController
     products = Product.all.order(created_at: :desc)
     render json: {
       status: { code: 200, message: "Products retrieved successfully." },
-      data: products.map { |product| product_serializer(product) }
+      data: ProductSerializer.new(products).serializable_hash
     }
   end
 
   def show
     render json: {
       status: { code: 200, message: "Product retrieved successfully." },
-      data: product_serializer(@product)
+      data: ProductSerializer.new(@product).serializable_hash
     }
   end
 
@@ -23,7 +23,7 @@ class Api::V1::Admin::ProductsController < Api::V1::ApplicationController
     if product.save
       render json: {
         status: { code: 200, message: "Product created successfully." },
-        data: product_serializer(product)
+        data: ProductSerializer.new(product).serializable_hash
       }
     else
       render json: {
@@ -36,7 +36,7 @@ class Api::V1::Admin::ProductsController < Api::V1::ApplicationController
     if @product.update(product_params)
       render json: {
         status: { code: 200, message: "Product updated successfully." },
-        data: product_serializer(@product)
+        data: ProductSerializer.new(@product).serializable_hash
       }
     else
       render json: {
@@ -72,18 +72,5 @@ class Api::V1::Admin::ProductsController < Api::V1::ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :category, :vegetarian, :price, :image)
-  end
-
-  def product_serializer(product)
-    {
-      id: product.id,
-      name: product.name,
-      category: product.category,
-      vegetarian: product.vegetarian,
-      price: product.price,
-      image: product.image,
-      created_at: product.created_at,
-      updated_at: product.updated_at
-    }
   end
 end

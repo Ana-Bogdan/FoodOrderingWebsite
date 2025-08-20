@@ -4,16 +4,17 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
 
   def index
     orders = Order.includes(:user, :order_items, :products).order(created_at: :desc)
+
     render json: {
       status: { code: 200, message: "Orders retrieved successfully." },
-      data: orders.map { |order| admin_order_serializer(order) }
+      data: AdminOrderSerializer.new(orders).serializable_hash
     }
   end
 
   def show
     render json: {
       status: { code: 200, message: "Order retrieved successfully." },
-      data: admin_order_serializer(@order)
+      data: AdminOrderSerializer.new(@order).serializable_hash
     }
   end
 
@@ -21,7 +22,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     if @order.update(order_params)
       render json: {
         status: { code: 200, message: "Order updated successfully." },
-        data: admin_order_serializer(@order)
+        data: AdminOrderSerializer.new(@order).serializable_hash
       }
     else
       render json: {
@@ -32,11 +33,22 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
 
   def update_status
     order = Order.find(params[:id])
+    new_status = params[:order][:status]
 
-    if order.update(status: params[:order][:status])
+
+    valid_statuses = [ "pending", "completed", "cancelled" ]
+
+    unless valid_statuses.include?(new_status)
+      render json: {
+        status: { message: "Invalid status. Must be one of: #{valid_statuses.join(', ')}" }
+      }, status: :unprocessable_entity
+      return
+    end
+
+    if order.update(status: new_status)
       render json: {
         status: { code: 200, message: "Order status updated successfully." },
-        data: admin_order_serializer(order)
+        data: AdminOrderSerializer.new(order).serializable_hash
       }
     else
       render json: {
@@ -46,7 +58,25 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
   rescue ActiveRecord::RecordNotFound
     render json: {
       status: { message: "Order not found." }
+    }, status: :unprocessable_entity
+  end
+
+  def destroy
+    order = Order.find(params[:id])
+
+    order.destroy
+
+    render json: {
+      status: { code: 200, message: "Order deleted successfully." }
+    }
+  rescue ActiveRecord::RecordNotFound
+    render json: {
+      status: { message: "Order not found." }
     }, status: :not_found
+  rescue => e
+    render json: {
+      status: { message: "Failed to delete order: #{e.message}" }
+    }, status: :unprocessable_entity
   end
 
   private
@@ -69,34 +99,5 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
 
   def order_params
     params.require(:order).permit(:status)
-  end
-
-  def admin_order_serializer(order)
-    {
-      id: order.id,
-      user: {
-        id: order.user.id,
-        name: order.user.name,
-        email: order.user.email
-      },
-      total_amount: order.total_amount,
-      status: order.status,
-      created_at: order.created_at,
-      updated_at: order.updated_at,
-      order_items: order.order_items.map { |item| admin_order_item_serializer(item) }
-    }
-  end
-
-  def admin_order_item_serializer(order_item)
-    {
-      id: order_item.id,
-      product: {
-        id: order_item.product.id,
-        name: order_item.product.name,
-        price: order_item.product.price
-      },
-      quantity: order_item.quantity,
-      price_at_time: order_item.price_at_time
-    }
   end
 end

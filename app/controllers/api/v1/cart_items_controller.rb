@@ -5,7 +5,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     cart_items = current_user.cart.cart_items.includes(:product)
     render json: {
       status: { code: 200, message: "Cart items retrieved successfully." },
-      data: cart_items.map { |item| cart_item_serializer(item) }
+      data: CartItemSerializer.new(cart_items).serializable_hash
     }
   end
 
@@ -24,7 +24,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
 
     render json: {
       status: { code: 200, message: "Item added to cart successfully." },
-      data: cart_item_serializer(cart_item)
+      data: CartItemSerializer.new(cart_item).serializable_hash
     }
   rescue ActiveRecord::RecordNotFound
     render json: {
@@ -38,7 +38,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     if cart_item.update(cart_item_params)
       render json: {
         status: { code: 200, message: "Cart item updated successfully." },
-        data: cart_item_serializer(cart_item)
+        data: CartItemSerializer.new(cart_item).serializable_hash
       }
     else
       render json: {
@@ -72,19 +72,5 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
 
   def ensure_user_cart_exists
     current_user.build_cart.save! unless current_user.cart
-  end
-
-  def cart_item_serializer(cart_item)
-    {
-      id: cart_item.id,
-      product: {
-        id: cart_item.product.id,
-        name: cart_item.product.name,
-        price: cart_item.product.price,
-        image: cart_item.product.image
-      },
-      quantity: cart_item.quantity,
-      total_price: cart_item.quantity * cart_item.product.price
-    }
   end
 end

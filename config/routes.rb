@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       # Admin routes
       namespace :admin do
         resources :products
-        resources :orders, only: [ :index, :show, :update ]
+        resources :orders, only: [ :index, :show, :update, :destroy ]
         patch "orders/:id/update_status", to: "orders#update_status"
       end
     end
