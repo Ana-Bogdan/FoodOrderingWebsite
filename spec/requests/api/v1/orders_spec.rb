@@ -1,0 +1,20 @@
+require 'rails_helper'
+
+RSpec.describe 'Api::V1::Orders', type: :request do
+  let!(:user) { create(:user, :with_cart) }
+  let(:headers) { { 'Authorization' => "Bearer #{user.generate_jwt}" } }
+  let!(:product) { create(:product) }
+  let!(:order) { create(:order, :with_items, user: user) }
+
+  describe 'Order management' do
+    it 'allows cancelling pending order' do
+      patch "/api/v1/orders/#{order.id}/cancel", headers: headers
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'reorders from previous order' do
+      post "/api/v1/orders/#{order.id}/reorder", headers: headers
+      expect(response).to have_http_status(:ok)
+    end
+  end
+end

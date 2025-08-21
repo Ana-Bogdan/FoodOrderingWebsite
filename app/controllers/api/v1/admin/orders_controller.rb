@@ -29,12 +29,15 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
         status: { message: "Update failed: #{@order.errors.full_messages.join(', ')}" }
       }, status: :unprocessable_entity
     end
+  rescue ArgumentError => e
+    render json: {
+      status: { message: "Invalid parameter: #{e.message}" }
+    }, status: :unprocessable_entity
   end
 
   def update_status
     order = Order.find(params[:id])
     new_status = params[:order][:status]
-
 
     valid_statuses = [ "pending", "completed", "cancelled" ]
 

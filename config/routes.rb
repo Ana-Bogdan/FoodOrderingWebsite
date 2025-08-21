@@ -62,4 +62,7 @@ Rails.application.routes.draw do
 
   # Defines the root path ("/")
   # root "posts#index"
+
+  # API Documentation
+  # apipie
 end

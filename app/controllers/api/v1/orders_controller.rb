@@ -120,13 +120,10 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
   def reorder
     order = current_user.orders.find(params[:id])
 
-    # Ensure user has a cart
     ensure_user_cart_exists
 
-    # Clear current cart
     current_user.cart.cart_items.destroy_all
 
-    # Add order items back to cart
     order.order_items.each do |order_item|
       current_user.cart.cart_items.create!(
         product: order_item.product,
