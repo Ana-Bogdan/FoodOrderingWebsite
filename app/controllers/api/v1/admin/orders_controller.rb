@@ -1,6 +1,6 @@
 class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
   include AdminAuthenticatable
-  
+
   before_action :require_admin
   before_action :set_order, only: [ :show, :update ]
 

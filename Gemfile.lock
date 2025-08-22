@@ -74,6 +74,7 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    alba (3.9.0)
     apipie-rails (1.5.0)
       actionpack (>= 5.0)
       activesupport (>= 5.0)
@@ -390,6 +391,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  alba
   apipie-rails
   bcrypt (~> 3.1.7)
   bootsnap

@@ -1,7 +1,7 @@
 class OrderSerializer
-  include JSONAPI::Serializer
+  include Alba::Resource
 
   attributes :id, :total_amount, :status, :created_at, :updated_at
 
-  has_many :order_items, serializer: OrderItemSerializer
+  many :order_items, resource: OrderItemSerializer
 end

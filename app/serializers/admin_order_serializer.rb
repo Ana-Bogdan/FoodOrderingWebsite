@@ -1,30 +1,15 @@
 class AdminOrderSerializer
-  include JSONAPI::Serializer
+  include Alba::Resource
 
-  attributes :total_amount, :status, :created_at
-
-  def self.record_type
-    "order"
-  end
+  attributes :id, :total_amount, :status, :created_at, :updated_at
 
   attribute :user_info do |order|
     {
       name: order.user.name,
-      email: order.user.email
+      email: order.user.email,
+      role: order.user.role
     }
   end
 
-  attribute :order_items_info do |order|
-    order.order_items.map do |item|
-      {
-        quantity: item.quantity,
-        price_at_time: item.price_at_time,
-        product: {
-          name: item.product.name,
-          category: item.product.category,
-          vegetarian: item.product.vegetarian
-        }
-      }
-    end
-  end
+  many :order_items, resource: OrderItemSerializer
 end

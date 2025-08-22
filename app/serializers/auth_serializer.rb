@@ -1,5 +1,5 @@
 class AuthSerializer
-  include JSONAPI::Serializer
+  include Alba::Resource
 
   attributes :id, :name, :email, :role
 
@@ -10,9 +10,7 @@ class AuthSerializer
   def self.serialize_auth_response(user, message)
     {
       status: { code: 200, message: message },
-      data: {
-        user: new(user).serializable_hash[:data][:attributes]
-      }
+      data: new(user).serializable_hash
     }
   end
 

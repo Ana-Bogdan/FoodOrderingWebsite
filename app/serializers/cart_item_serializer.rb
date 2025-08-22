@@ -1,5 +1,5 @@
 class CartItemSerializer
-  include JSONAPI::Serializer
+  include Alba::Resource
 
   attributes :id, :quantity
 
@@ -7,5 +7,5 @@ class CartItemSerializer
     cart_item.quantity * cart_item.product.price
   end
 
-  belongs_to :product, serializer: ProductSerializer
+  one :product, resource: ProductSerializer
 end

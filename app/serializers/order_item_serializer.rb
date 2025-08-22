@@ -1,7 +1,7 @@
 class OrderItemSerializer
-  include JSONAPI::Serializer
+  include Alba::Resource
 
   attributes :id, :quantity, :price_at_time
 
-  belongs_to :product, serializer: ProductSerializer
+  one :product, resource: ProductSerializer
 end

@@ -1,5 +1,5 @@
 class ProductSerializer
-  include JSONAPI::Serializer
+  include Alba::Resource
 
   attributes :id, :name, :price, :image, :category, :vegetarian, :created_at, :updated_at
 end
