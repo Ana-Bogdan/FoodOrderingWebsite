@@ -7,10 +7,10 @@ RSpec.describe 'Api::V1::Products', type: :request do
   describe 'Product listing' do
     it 'returns all products' do
       get '/api/v1/products'
-      
+
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to include('application/json')
-      
+
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key('data')
       expect(json_response).to have_key('status')
@@ -19,10 +19,10 @@ RSpec.describe 'Api::V1::Products', type: :request do
 
     it 'returns specific product' do
       get "/api/v1/products/#{product.id}"
-      
+
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to include('application/json')
-      
+
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key('data')
       expect(json_response).to have_key('status')

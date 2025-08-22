@@ -64,5 +64,5 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   # API Documentation
-  # apipie
+  apipie if Rails.env.development?
 end

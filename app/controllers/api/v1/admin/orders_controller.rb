@@ -2,6 +2,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
   before_action :require_admin
   before_action :set_order, only: [ :show, :update ]
 
+  api :GET, "/api/v1/admin/orders", "List all orders (admin)" if defined?(Apipie)
   def index
     orders = Order.includes(:user, :order_items, :products).order(created_at: :desc)
 
@@ -11,6 +12,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     }
   end
 
+  api :GET, "/api/v1/admin/orders/:id", "Get specific order (admin)" if defined?(Apipie)
   def show
     render json: {
       status: { code: 200, message: "Order retrieved successfully." },
@@ -18,6 +20,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     }
   end
 
+  api :PATCH, "/api/v1/admin/orders/:id", "Update order (admin)" if defined?(Apipie)
   def update
     if @order.update(order_params)
       render json: {
@@ -35,6 +38,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     }, status: :unprocessable_entity
   end
 
+  api :PATCH, "/api/v1/admin/orders/:id/update_status", "Update order status (admin)" if defined?(Apipie)
   def update_status
     order = Order.find(params[:id])
     new_status = params[:order][:status]
@@ -64,6 +68,7 @@ class Api::V1::Admin::OrdersController < Api::V1::ApplicationController
     }, status: :unprocessable_entity
   end
 
+  api :DELETE, "/api/v1/admin/orders/:id", "Delete order (admin)" if defined?(Apipie)
   def destroy
     order = Order.find(params[:id])
 

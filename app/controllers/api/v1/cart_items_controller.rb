@@ -1,6 +1,7 @@
 class Api::V1::CartItemsController < Api::V1::ApplicationController
   before_action :ensure_user_cart_exists
 
+  api :GET, "/api/v1/cart_items", "List user cart items" if defined?(Apipie)
   def index
     cart_items = current_user.cart.cart_items.includes(:product)
     render json: {
@@ -9,6 +10,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     }
   end
 
+  api :POST, "/api/v1/cart_items", "Add item to cart" if defined?(Apipie)
   def create
     product = Product.find(params[:cart_item][:product_id])
     cart_item = current_user.cart.cart_items.find_by(product: product)
@@ -32,6 +34,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     }, status: :not_found
   end
 
+  api :PATCH, "/api/v1/cart_items/:id", "Update cart item quantity" if defined?(Apipie)
   def update
     cart_item = current_user.cart.cart_items.find(params[:id])
 
@@ -51,6 +54,7 @@ class Api::V1::CartItemsController < Api::V1::ApplicationController
     }, status: :not_found
   end
 
+  api :DELETE, "/api/v1/cart_items/:id", "Remove item from cart" if defined?(Apipie)
   def destroy
     cart_item = current_user.cart.cart_items.find(params[:id])
     cart_item.destroy

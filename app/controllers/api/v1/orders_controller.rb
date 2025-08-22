@@ -1,6 +1,7 @@
 class Api::V1::OrdersController < Api::V1::ApplicationController
   before_action :ensure_user_cart_exists, only: [ :create ]
 
+  api :GET, "/api/v1/orders", "List user orders" if defined?(Apipie)
   def index
     orders = current_user.orders.includes(:order_items, :products).order(created_at: :desc)
     render json: {
@@ -9,6 +10,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
     }
   end
 
+  api :GET, "/api/v1/orders/:id", "Get specific order" if defined?(Apipie)
   def show
     order = current_user.orders.find(params[:id])
     render json: {
@@ -21,6 +23,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
     }, status: :not_found
   end
 
+  api :POST, "/api/v1/orders", "Create order from cart" if defined?(Apipie)
   def create
     cart = current_user.cart
 
@@ -83,6 +86,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
     }, status: :not_found
   end
 
+  api :PATCH, "/api/v1/orders/:id/cancel", "Cancel pending order" if defined?(Apipie)
   def cancel
     order = current_user.orders.find(params[:id])
 
@@ -117,6 +121,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
     }
   end
 
+  api :POST, "/api/v1/orders/:id/reorder", "Reorder from previous order" if defined?(Apipie)
   def reorder
     order = current_user.orders.find(params[:id])
 

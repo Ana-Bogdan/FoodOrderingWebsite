@@ -9,10 +9,10 @@ RSpec.describe 'Api::V1::Orders', type: :request do
   describe 'Order management' do
     it 'allows cancelling pending order' do
       patch "/api/v1/orders/#{order.id}/cancel", headers: headers
-      
+
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to include('application/json')
-      
+
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key('data')
       expect(json_response).to have_key('status')
@@ -21,10 +21,10 @@ RSpec.describe 'Api::V1::Orders', type: :request do
 
     it 'reorders from previous order' do
       post "/api/v1/orders/#{order.id}/reorder", headers: headers
-      
+
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to include('application/json')
-      
+
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key('data')
       expect(json_response).to have_key('status')

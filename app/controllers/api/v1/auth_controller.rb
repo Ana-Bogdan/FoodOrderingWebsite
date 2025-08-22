@@ -1,6 +1,7 @@
 class Api::V1::AuthController < Api::V1::ApplicationController
   skip_before_action :authenticate_user!, only: [ :register, :login ]
 
+  api :POST, "/api/v1/register", "Register a new user" if defined?(Apipie)
   def register
     user = User.new(user_params)
 
@@ -26,6 +27,7 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     end
   end
 
+  api :POST, "/api/v1/login", "Login user" if defined?(Apipie)
   def login
     user = User.find_by(email: login_params[:email])
 
@@ -51,6 +53,7 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     end
   end
 
+  api :DELETE, "/api/v1/logout", "Logout user" if defined?(Apipie)
   def logout
     render json: {
       status: { code: 200, message: "Logged out successfully." }
