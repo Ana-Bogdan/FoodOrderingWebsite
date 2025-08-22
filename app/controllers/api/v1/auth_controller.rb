@@ -6,24 +6,9 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     user = User.new(user_params)
 
     if user.save
-      token = user.generate_jwt
-
-      render json: {
-        status: { code: 200, message: "User registered successfully." },
-        data: {
-          user: {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role
-          },
-          token: token
-        }
-      }
+      render json: AuthSerializer.serialize_auth_response(user, "User registered successfully.")
     else
-      render json: {
-        status: { message: "Registration failed: #{user.errors.full_messages.join(', ')}" }
-      }, status: :unprocessable_entity
+      render json: AuthSerializer.serialize_error_response("Registration failed: #{user.errors.full_messages.join(', ')}"), status: :unprocessable_entity
     end
   end
 
@@ -32,32 +17,15 @@ class Api::V1::AuthController < Api::V1::ApplicationController
     user = User.find_by(email: login_params[:email])
 
     if user&.valid_password?(login_params[:password])
-      token = user.generate_jwt
-
-      render json: {
-        status: { code: 200, message: "Logged in successfully." },
-        data: {
-          user: {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role
-          },
-          token: token
-        }
-      }
+      render json: AuthSerializer.serialize_auth_response(user, "Logged in successfully.")
     else
-      render json: {
-        status: { message: "Invalid email or password." }
-      }, status: :unauthorized
+      render json: AuthSerializer.serialize_error_response("Invalid email or password."), status: :unauthorized
     end
   end
 
   api :DELETE, "/api/v1/logout", "Logout user" if defined?(Apipie)
   def logout
-    render json: {
-      status: { code: 200, message: "Logged out successfully." }
-    }
+    render json: AuthSerializer.serialize_logout_response
   end
 
   private
