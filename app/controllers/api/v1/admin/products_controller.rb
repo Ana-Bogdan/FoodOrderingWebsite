@@ -1,4 +1,6 @@
 class Api::V1::Admin::ProductsController < Api::V1::ApplicationController
+  include AdminAuthenticatable
+  
   before_action :require_admin
   before_action :set_product, only: [ :show, :update, :destroy ]
 
@@ -58,14 +60,6 @@ class Api::V1::Admin::ProductsController < Api::V1::ApplicationController
   end
 
   private
-
-  def require_admin
-    unless current_user.admin?
-      render json: {
-        status: { message: "Access denied. Admin privileges required." }
-      }, status: :forbidden
-    end
-  end
 
   def set_product
     @product = Product.find(params[:id])
