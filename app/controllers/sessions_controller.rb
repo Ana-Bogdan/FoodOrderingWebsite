@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_login
+  skip_before_action :authenticate_user!
 
   def new
     # GET request - display login form
@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
   def create
     # POST request - handle login authentication
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
+    if user&.valid_password?(params[:password])
+      sign_in(user)
       redirect_to root_path, notice: "Welcome back, #{user.name}!"
     else
       flash.now[:alert] = "Invalid email or password"
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
 
   def destroy
     # DELETE request - handle logout
-    session[:user_id] = nil
+    sign_out(current_user)
     redirect_to root_path, notice: "Successfully logged out!"
   end
 end

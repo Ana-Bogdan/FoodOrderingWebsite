@@ -1,0 +1,17 @@
+if Rails.env.development?
+  Apipie.configure do |config|
+    config.app_name                = "Food Ordering API"
+    config.api_base_url            = "/api"
+    config.doc_base_url            = "/apipie"
+    config.api_controllers_matcher = "#{Rails.root}/app/controllers/api/**/*.rb"
+    config.app_info = "Food Ordering Website API Documentation"
+    config.copyright = "&copy; 2025 Food Ordering Website"
+    config.default_version = "1.0"
+    config.validate = false
+    config.use_cache = Rails.env.production?
+    config.ignore_allow_blank_false = true
+    config.authenticate = false
+    config.authorize = false
+    config.force_dsl = true
+  end
+end

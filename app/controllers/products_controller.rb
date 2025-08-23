@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  skip_before_action :require_login, only: %i[ index show ]
+  skip_before_action :authenticate_user!, only: %i[ index show ]
   before_action :set_product, only: %i[ show edit update destroy ]
   before_action :require_admin, only: %i[ dashboard new create edit update destroy ]
 
@@ -56,7 +56,7 @@ class ProductsController < ApplicationController
     end
 
     def require_admin
-      unless logged_in? && current_user.admin?
+      unless user_signed_in? && current_user.admin?
         redirect_to root_path, alert: "Access denied. Admin privileges required."
       end
     end

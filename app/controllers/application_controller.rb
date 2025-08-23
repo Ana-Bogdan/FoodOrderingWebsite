@@ -6,22 +6,20 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
 
-  before_action :require_login
+  before_action :authenticate_user!
 
   private
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  rescue ActiveRecord::RecordNotFound
-    session[:user_id] = nil
+    super
   end
 
   def logged_in?
-    !!current_user
+    user_signed_in?
   end
 
   def require_login
-    unless logged_in?
+    unless user_signed_in?
       redirect_to login_path, alert: "Please log in to access this page."
     end
   end

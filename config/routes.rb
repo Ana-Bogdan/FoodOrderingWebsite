@@ -1,10 +1,39 @@
 Rails.application.routes.draw do
-  # Authentication routes
+  # Devise routes for authentication (web interface)
+  devise_for :users, skip: [ :sessions, :registrations ]
+
+  # Custom web authentication routes
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   get "logout", to: "sessions#destroy"
   get "signup", to: "registrations#new"
   post "signup", to: "registrations#create"
+
+  # API routes
+  namespace :api do
+    namespace :v1 do
+      # API Authentication endpoints
+      post "register", to: "auth#register"
+      post "login", to: "auth#login"
+      delete "logout", to: "auth#logout"
+
+      # Core API Endpoints
+      resources :products, only: [ :index, :show ]
+      resources :cart_items, only: [ :index, :create, :update, :destroy ]
+      resources :orders, only: [ :index, :show, :create ]
+      patch "orders/:id/update_status", to: "orders#update_status"
+      patch "orders/:id/cancel", to: "orders#cancel"
+      post "orders/:id/reorder", to: "orders#reorder"
+      get "my_orders", to: "orders#my_orders"
+
+      # Admin routes
+      namespace :admin do
+        resources :products
+        resources :orders, only: [ :index, :show, :update, :destroy ]
+        patch "orders/:id/update_status", to: "orders#update_status"
+      end
+    end
+  end
 
   # Cart routes
   get "cart", to: "cart#show"
@@ -15,14 +44,13 @@ Rails.application.routes.draw do
 
   # Orders routes
   resources :orders, only: [ :index, :show, :create, :destroy ]
-  patch "orders/:id/update", to: "orders#update", as: :update_order_status
+  patch "orders/:id/update", to: "orders#update_status", as: :update_order_status
   patch "orders/:id/cancel", to: "orders#cancel", as: :cancel_order
   get "my_orders", to: "orders#my_orders", as: :my_orders
 
   root "products#index"
   resources :products
   get "dashboard", to: "products#dashboard"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
@@ -34,4 +62,7 @@ Rails.application.routes.draw do
 
   # Defines the root path ("/")
   # root "posts#index"
+
+  # API Documentation
+  apipie if Rails.env.development?
 end
